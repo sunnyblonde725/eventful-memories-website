@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Your Event — Eventful Memories</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Eventful Memories</a></div>
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#portfolio">Portfolio</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="book.html">Book</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="book-page">
+    <h1>Build Your Quote</h1>
+    <p class="book-subtitle">Customize your photo booth experience and send us an inquiry — we'll follow up within 24 hours to confirm availability and details.</p>
+
+    <div id="quote-loading">Loading packages...</div>
+    <div id="quote-error" style="display:none; color:#b8922a;">Unable to load packages. Please try again later.</div>
+
+    <div id="quote-builder" style="display:none;">
+      <div id="quote-items"></div>
+
+      <div class="quote-total">
+        <span>Estimated Total:</span>
+        <span id="quote-price">$400.00</span>
+      </div>
+
+      <form id="inquiry-form">
+        <input type="text" id="inq-name" placeholder="Your Name" required />
+        <input type="email" id="inq-email" placeholder="Your Email" required />
+        <input type="text" id="inq-date" placeholder="Event Date (e.g. Aug 15, 2026)" required />
+        <input type="text" id="inq-venue" placeholder="Venue / Location" />
+        <textarea id="inq-message" placeholder="Tell us about your event..." required></textarea>
+        <button type="submit" class="btn">Send Inquiry</button>
+      </form>
+
+      <div id="inquiry-success" style="display:none;">
+        <p>Thanks! We'll be in touch within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Eventful Memories LLC</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
