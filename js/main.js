@@ -26,13 +26,20 @@ function renderQuoteBuilder() {
   const container = document.getElementById("quote-items");
   container.innerHTML = "";
 
-  // Base package
+  // Base package — variation selector
   const baseEl = document.createElement("div");
   baseEl.className = "quote-section";
+  let variationsHTML = item.variations.map((v, i) => `
+    <label class="quote-modifier-row">
+      <input type="radio" name="variation" value="${v.price}" ${i === 0 ? "checked" : ""} />
+      <span>${v.name}</span>
+      <span class="mod-price">$${(v.price / 100).toFixed(2)}</span>
+    </label>
+  `).join("");
   baseEl.innerHTML = `
     <h3>${item.name}</h3>
     <p class="quote-desc">${item.description}</p>
-    <div class="quote-base-price">$${(basePrice / 100).toFixed(2)} base — 3 hours, setup &amp; teardown included</div>
+    ${variationsHTML}
   `;
   container.appendChild(baseEl);
 
@@ -107,7 +114,8 @@ function changeHours(delta) {
 
 function updateTotal() {
   if (!catalogData) return;
-  const basePrice = catalogData.items[0]?.variations[0]?.price || 40000;
+  const selectedVariation = document.querySelector('input[name="variation"]:checked');
+  const basePrice = selectedVariation ? parseInt(selectedVariation.value) : (catalogData.items[0]?.variations[0]?.price || 40000);
 
   let modTotal = 0;
   document.querySelectorAll("#quote-items input:checked").forEach((input) => {
