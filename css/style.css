@@ -674,6 +674,138 @@ form textarea {
   margin-bottom: 1.25rem;
 }
 
+/* ── Contact Section ── */
+.contact-section {
+  background: var(--cream-dark);
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.contact-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-inner h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.contact-tagline {
+  color: var(--gray);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-email {
+  display: inline-block;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 2.5rem;
+  transition: opacity 0.2s;
+}
+
+.contact-email:hover { opacity: 0.7; }
+
+.collab-note {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  padding-top: 1.75rem;
+  border-top: 1px solid #d4c9b8;
+}
+
+.collab-note a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.collab-note a:hover { text-decoration: underline; }
+
+/* ── Collab Section ── */
+.collab-section {
+  background: var(--black);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.collab-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.collab-section h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.03em;
+}
+
+.collab-section p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1rem;
+  line-height: 1.85;
+  margin-bottom: 2.5rem;
+}
+
+.btn--light {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.btn--light:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ── Policy Page ── */
+.policy-block {
+  border-bottom: 1px solid var(--cream-dark);
+  padding: 2.5rem 0;
+  max-width: 680px;
+}
+
+.policy-block:last-child { border-bottom: none; }
+
+.policy-block h2 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--text);
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.policy-block p {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  margin-bottom: 0.75rem;
+}
+
+.policy-block p:last-child { margin-bottom: 0; }
+
+.policy-block ul {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 2.1;
+}
+
+/* ── Footer link ── */
+.footer-link {
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover { color: var(--gold); }
+
 /* ── Footer ── */
 footer {
   border-top: 1px solid var(--cream-dark);
