@@ -22,7 +22,7 @@
 
   <div class="book-page">
     <h1>Build Your Quote</h1>
-    <p class="book-subtitle">Customize your photo booth experience and send us an inquiry — we'll follow up within 24 hours to confirm availability and details.</p>
+    <p class="book-subtitle">Build your custom quote below, then book your date directly through Square — or send us a message if you have questions first.</p>
 
     <div id="quote-loading">Loading packages...</div>
     <div id="quote-error" style="display:none; color:#b8922a;">Unable to load packages. Please try again later.</div>
@@ -34,6 +34,16 @@
         <span>Estimated Total:</span>
         <span id="quote-price">$400.00</span>
       </div>
+
+      <div class="square-booking">
+        <h3>Book Your Date</h3>
+        <p class="square-booking-note">Ready to lock in your event? A 50% deposit is collected at booking to hold your date.</p>
+        <script src='https://square.site/appointments/buyer/widget/xfuydcl0jvm9n1/LTYA3CBXJBTJK.js'></script>
+      </div>
+
+      <div class="booking-or"><span>or</span></div>
+
+      <p class="inquiry-label">Still have questions? Send us a message and we'll get back to you within 24 hours.</p>
 
       <form id="inquiry-form" name="inquiry" data-netlify="true">
         <input type="hidden" name="form-name" value="inquiry" />

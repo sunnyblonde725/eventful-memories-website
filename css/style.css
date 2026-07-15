@@ -628,6 +628,52 @@ form textarea {
 .lightbox-prev { left: 0.5rem; }
 .lightbox-next { right: 0.5rem; }
 
+/* ── Square Booking Section ── */
+.square-booking {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid var(--cream-dark);
+}
+
+.square-booking h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
+}
+
+.square-booking-note {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.booking-or {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0 1.25rem;
+  color: var(--gray);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.booking-or::before,
+.booking-or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--cream-dark);
+}
+
+.inquiry-label {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
 /* ── Footer ── */
 footer {
   border-top: 1px solid var(--cream-dark);
