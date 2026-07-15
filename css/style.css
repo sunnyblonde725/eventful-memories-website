@@ -355,6 +355,217 @@ form textarea {
   padding: 1rem 0;
 }
 
+/* ── Inner Pages (Pricing, Portfolio) ── */
+.inner-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8rem 2rem 6rem;
+}
+
+.inner-page h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--gold);
+  margin-bottom: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.page-subtitle {
+  color: var(--gray);
+  font-size: 1rem;
+  margin-bottom: 3rem;
+  line-height: 1.7;
+  max-width: 620px;
+}
+
+.page-subtitle a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.page-subtitle a:hover {
+  text-decoration: underline;
+}
+
+/* ── Pricing Cards (full page) ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.pricing-card {
+  border: 1px solid var(--cream-dark);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pricing-card--featured {
+  border-color: var(--gold);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -0.8rem;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.8rem;
+}
+
+.pricing-tier {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  margin-top: 0.5rem;
+}
+
+.pricing-price {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.pricing-guests {
+  color: var(--gray);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pricing-includes {
+  list-style: none;
+  text-align: left;
+  width: 100%;
+  margin: 0.5rem 0 1rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 2.1;
+}
+
+.pricing-includes li::before {
+  content: "✓ ";
+  color: var(--gold);
+}
+
+/* ── Add-Ons ── */
+.pricing-extras {
+  border-top: 1px solid var(--cream-dark);
+  padding-top: 3rem;
+}
+
+.pricing-extras h2 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.03em;
+}
+
+.pricing-addon-list {
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.pricing-addon-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--cream-dark);
+  font-size: 0.95rem;
+}
+
+.addon-name {
+  color: var(--text);
+}
+
+.addon-price {
+  color: var(--gold);
+  font-family: var(--font-heading);
+}
+
+.pricing-note {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-top: 1.5rem;
+}
+
+.pricing-note a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+/* ── Pricing Teaser (homepage) ── */
+.pricing-teaser {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0 0;
+}
+
+.pricing-teaser-card {
+  border: 1px solid var(--cream-dark);
+  padding: 1.75rem;
+  text-align: center;
+}
+
+.pricing-teaser-card--featured {
+  border-color: var(--gold);
+}
+
+.pricing-teaser-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.teaser-price {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.teaser-guests {
+  color: var(--gray);
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── Portfolio Full Page ── */
+.portfolio-grid-full {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.portfolio-grid-full img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  object-position: center top;
+  transition: opacity 0.2s;
+}
+
+.portfolio-grid-full img:hover {
+  opacity: 0.85;
+}
+
 /* ── Footer ── */
 footer {
   border-top: 1px solid var(--cream-dark);
