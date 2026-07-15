@@ -35,12 +35,14 @@
         <span id="quote-price">$400.00</span>
       </div>
 
-      <form id="inquiry-form">
-        <input type="text" id="inq-name" placeholder="Your Name" required />
-        <input type="email" id="inq-email" placeholder="Your Email" required />
-        <input type="text" id="inq-date" placeholder="Event Date (e.g. Aug 15, 2026)" required />
-        <input type="text" id="inq-venue" placeholder="Venue / Location" />
-        <textarea id="inq-message" placeholder="Tell us about your event..." required></textarea>
+      <form id="inquiry-form" name="inquiry" data-netlify="true">
+        <input type="hidden" name="form-name" value="inquiry" />
+        <input type="hidden" id="inq-quote-summary" name="quote-summary" />
+        <input type="text" id="inq-name" name="name" placeholder="Your Name" required />
+        <input type="email" id="inq-email" name="email" placeholder="Your Email" required />
+        <input type="text" id="inq-date" name="event-date" placeholder="Event Date (e.g. Aug 15, 2026)" required />
+        <input type="text" id="inq-venue" name="venue" placeholder="Venue / Location" />
+        <textarea id="inq-message" name="message" placeholder="Tell us about your event..." required></textarea>
         <button type="submit" class="btn">Send Inquiry</button>
       </form>
 

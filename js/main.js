@@ -29,7 +29,7 @@ function renderQuoteBuilder() {
   // Base package — variation selector
   const baseEl = document.createElement("div");
   baseEl.className = "quote-section";
-  let variationsHTML = item.variations.map((v, i) => `
+  let variationsHTML = [...item.variations].sort((a, b) => a.price - b.price).map((v, i) => `
     <label class="quote-modifier-row">
       <input type="radio" name="variation" value="${v.price}" ${i === 0 ? "checked" : ""} />
       <span>${v.name}</span>
@@ -132,8 +132,21 @@ function updateTotal() {
 
 document.getElementById("inquiry-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
-  document.getElementById("inquiry-form").style.display = "none";
-  document.getElementById("inquiry-success").style.display = "block";
+  const quotePrice = document.getElementById("quote-price")?.textContent || "Not calculated";
+  document.getElementById("inq-quote-summary").value = `Estimated total: ${quotePrice}`;
+  const form = e.target;
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(new FormData(form)).toString(),
+  })
+    .then(() => {
+      form.style.display = "none";
+      document.getElementById("inquiry-success").style.display = "block";
+    })
+    .catch(() => {
+      alert("Something went wrong — please try again or email us at lorenne@eventfulmemoriesco.com");
+    });
 });
 
 loadCatalog();
