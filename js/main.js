@@ -200,7 +200,7 @@ document.getElementById("inquiry-form")?.addEventListener("submit", async (e) =>
   } catch (err) {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
-    alert(err.message || "Something went wrong — please try again or email us at lorenne@eventfulmemoriesco.com");
+    alert(err.message || "Something went wrong — please try again or email us at inquiry@eventfulmemoriesco.com");
   }
 });
 

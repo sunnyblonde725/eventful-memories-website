@@ -185,7 +185,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: "Something went wrong sending your booking. Please email us at lorenne@eventfulmemoriesco.com and we'll get you sorted." }),
+      body: JSON.stringify({ error: "Something went wrong sending your booking. Please email us at inquiry@eventfulmemoriesco.com and we'll get you sorted." }),
     };
   }
 };
