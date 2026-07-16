@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Friends &amp; Family Discount — Eventful Memories</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Eventful Memories</a></div>
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="book.html">Book</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="inner-page">
+    <h1>Friends &amp; Family</h1>
+    <p class="page-subtitle">Think you might qualify for a discount? Answer a few questions and we'll tell you exactly where you land — takes about a minute.</p>
+
+    <div class="quiz-wrap">
+
+      <div id="quiz-q-wrap">
+        <p class="quiz-question" id="quiz-q"></p>
+        <div class="quiz-opts" id="quiz-opts"></div>
+        <div class="quiz-nav">
+          <button class="quiz-back-btn" id="quiz-back" onclick="goBack()" style="display:none;">← Back</button>
+        </div>
+      </div>
+
+      <div id="quiz-r-wrap" style="display:none;">
+        <div class="quiz-result">
+          <div class="quiz-result-icon" id="quiz-r-icon"></div>
+          <p class="quiz-result-title" id="quiz-r-title"></p>
+          <p class="quiz-result-body" id="quiz-r-body"></p>
+          <a href="mailto:inquiry@eventfulmemoriesco.com" class="btn" id="quiz-r-cta" style="display:none;">Get Your Code</a>
+          <button class="quiz-restart-btn" onclick="restart()">Start over</button>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="quiz-disclaimer">If you feel like you qualify but didn't get the result you expected, just <a href="mailto:inquiry@eventfulmemoriesco.com">reach out directly</a> — we'll sort it out.</p>
+  </div>
+
+  <div class="contact-section">
+    <div class="contact-inner">
+      <h2>Get in Touch</h2>
+      <p class="contact-tagline">Questions? We'd love to hear from you.</p>
+      <a href="mailto:inquiry@eventfulmemoriesco.com" class="contact-email">inquiry@eventfulmemoriesco.com</a>
+      <p class="collab-note">Interested in partnering with us? Whether you're a photographer, venue, or event organizer, <a href="mailto:inquiry@eventfulmemoriesco.com">reach out</a> — we'd love to connect.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Eventful Memories LLC &nbsp;·&nbsp; <a href="policy.html" class="footer-link">Policies</a></p>
+  </footer>
+
+  <script>
+  const steps = {
+    start: {
+      q: "Do you know Katy or Lorenne personally?",
+      opts: [
+        { label: "Yes, I know them!", next: "friend_or_family" },
+        { label: "No, I found you another way", next: "how_heard" }
+      ]
+    },
+    how_heard: {
+      q: "How did you hear about us?",
+      opts: [
+        { label: "You attended an event of mine", next: "event_attended" },
+        { label: "Advertisement or social media", next: "result_no_discount_general" },
+        { label: "Someone recommended you", next: "result_no_discount_general" }
+      ]
+    },
+    event_attended: {
+      q: "Fun! We may have left a promo code at your event. Do you have one?",
+      opts: [
+        { label: "Yes — I have an active promo code", next: "result_event_promo" },
+        { label: "I have a code but it might be expired", next: "result_expired_promo" },
+        { label: "No code", next: "result_no_code_event" }
+      ]
+    },
+    friend_or_family: {
+      q: "Are you a friend or family?",
+      opts: [
+        { label: "Family 👨‍👩‍👧", next: "family_whose" },
+        { label: "Friend 👋", next: "friend_whose" }
+      ]
+    },
+    family_whose: {
+      q: "Whose family are you?",
+      opts: [
+        { label: "Lorenne's family", next: "lorenne_imm_or_ext" },
+        { label: "Katy's family", next: "katy_imm_or_ext" },
+        { label: "Both of theirs!", next: "lorenne_imm_or_ext" }
+      ]
+    },
+    lorenne_imm_or_ext: {
+      q: "Are you immediate or extended family of Lorenne?",
+      opts: [
+        { label: "Immediate family", next: "lorenne_immediate_check" },
+        { label: "Extended family", next: "lorenne_ext_check" }
+      ]
+    },
+    lorenne_immediate_check: {
+      q: "Are you one of Katy and Alex's children — one of Lorenne's siblings?",
+      opts: [
+        { label: "Yes", next: "result_already_know_immediate" },
+        { label: "No", next: "lorenne_ext_redirect" }
+      ]
+    },
+    lorenne_ext_redirect: {
+      q: "Sounds like you might be extended family — let's find your discount from there!",
+      opts: [
+        { label: "Okay, keep going", next: "lorenne_ext_check" }
+      ]
+    },
+    lorenne_ext_check: {
+      q: "Are you a sibling of Katy or Alex, or one of their nieces/nephews? (Lorenne's aunt, uncle, or first cousin)",
+      opts: [
+        { label: "Yes", next: "result_15" },
+        { label: "No", next: "lorenne_cousin_check" }
+      ]
+    },
+    lorenne_cousin_check: {
+      q: "Are you a cousin or further removed?",
+      opts: [
+        { label: "Yes, I'm a cousin or further", next: "result_15" },
+        { label: "No", next: "result_no_discount_family" }
+      ]
+    },
+    katy_imm_or_ext: {
+      q: "Are you immediate or extended family of Katy?",
+      opts: [
+        { label: "Immediate family", next: "katy_immediate_check" },
+        { label: "Extended family", next: "katy_ext_ronnie_becca" }
+      ]
+    },
+    katy_immediate_check: {
+      q: "Are you a parent or sibling of Cooper or Lorenne?",
+      opts: [
+        { label: "Yes", next: "result_already_know_immediate" },
+        { label: "No", next: "katy_ext_redirect" }
+      ]
+    },
+    katy_ext_redirect: {
+      q: "Sounds like you might be extended family — let's find your discount from there!",
+      opts: [
+        { label: "Okay, keep going", next: "katy_ext_ronnie_becca" }
+      ]
+    },
+    katy_ext_ronnie_becca: {
+      q: "Are you Ronnie or Becca?",
+      opts: [
+        { label: "Yes, that's me!", next: "result_20" },
+        { label: "No", next: "katy_ext_aunt_uncle" }
+      ]
+    },
+    katy_ext_aunt_uncle: {
+      q: "Are you an aunt, uncle, or cousin of Cooper or Lorenne?",
+      opts: [
+        { label: "Yes", next: "result_20" },
+        { label: "No", next: "katy_second_cousin" }
+      ]
+    },
+    katy_second_cousin: {
+      q: "Are you a second cousin or further removed?",
+      opts: [
+        { label: "Yes", next: "katy_andrea" },
+        { label: "No", next: "result_no_discount_family" }
+      ]
+    },
+    katy_andrea: {
+      q: "Are you Andrea Gladowski?",
+      opts: [
+        { label: "Yes, that's me!", next: "result_15" },
+        { label: "No", next: "result_no_discount_family" }
+      ]
+    },
+    friend_whose: {
+      q: "Are you friends with Lorenne or Katy?",
+      opts: [
+        { label: "Lorenne's friend", next: "lorenne_vip_check" },
+        { label: "Katy's friend", next: "katy_vip_check" },
+        { label: "Both of theirs!", next: "lorenne_vip_check" }
+      ]
+    },
+    lorenne_vip_check: {
+      q: "Are you one of these people?  Katelin · Savannah · Charlie · Ele · Ian",
+      opts: [
+        { label: "Yes, that's me!", next: "result_already_know_vip" },
+        { label: "No", next: "lorenne_how_know" }
+      ]
+    },
+    lorenne_how_know: {
+      q: "How do you know Lorenne?",
+      opts: [
+        { label: "Work", next: "lorenne_work" },
+        { label: "School", next: "lorenne_school" },
+        { label: "Church", next: "lorenne_church" },
+        { label: "We're neighbors", next: "result_might_15_lorenne" },
+        { label: "We're just friends — she knows who I am", next: "result_might_15_lorenne" }
+      ]
+    },
+    lorenne_work: {
+      q: "Did you work with Lorenne at Zions Bank or Macey's?",
+      opts: [
+        { label: "Zions Bank", next: "result_might_15_lorenne" },
+        { label: "Macey's", next: "result_might_15_lorenne" },
+        { label: "Neither", next: "result_might_15_lorenne" }
+      ]
+    },
+    lorenne_school: {
+      q: "Are you one of these people?  Ben · Kayleigh · Maya · Leah · Luke",
+      opts: [
+        { label: "Yes, that's me!", next: "result_20" },
+        { label: "No", next: "result_might_15_lorenne" }
+      ]
+    },
+    lorenne_church: {
+      q: "Are you from Grandview 4th Ward or Bonneville 1st Ward?",
+      opts: [
+        { label: "Yes!", next: "result_15" },
+        { label: "No", next: "result_might_15_lorenne" }
+      ]
+    },
+    katy_vip_check: {
+      q: "Are you one of Katy's closest people? (You'll know if you are 😊)",
+      opts: [
+        { label: "Yes!", next: "result_20" },
+        { label: "Not sure / No", next: "katy_how_know" }
+      ]
+    },
+    katy_how_know: {
+      q: "How do you know Katy?",
+      opts: [
+        { label: "Work", next: "result_might_15_katy" },
+        { label: "School", next: "result_might_15_katy" },
+        { label: "Church", next: "result_might_15_katy" },
+        { label: "We're neighbors", next: "result_might_15_katy" },
+        { label: "We're just friends — she knows who I am", next: "result_might_15_katy" }
+      ]
+    },
+
+    // ── Results ──
+    result_no_discount_general: {
+      result: true,
+      icon: "🎉",
+      title: "Welcome!",
+      body: "We're so glad you found us! We don't have any automatic discounts for new customers, but we'd love to work with you. Keep an eye on our social media for promo codes!",
+      cta: null
+    },
+    result_event_promo: {
+      result: true,
+      icon: "🎟️",
+      title: "Use your code — it's a good one!",
+      body: "Your event promo code will get you a great discount. Enter it when you book — it'll likely be better than anything else we're running.",
+      cta: null
+    },
+    result_expired_promo: {
+      result: true,
+      icon: "😅",
+      title: "Expired code? Here's a little something anyway.",
+      body: "Sorry the code has expired! As a thank-you for still wanting to work with us, we'll honor a 5% discount. Reach out to claim it.",
+      cta: "Claim Your 5% Discount"
+    },
+    result_no_code_event: {
+      result: true,
+      icon: "📬",
+      title: "Reach out and we'll see what we can do!",
+      body: "We don't have a standard discount for this path, but we're happy to chat. Let us know which event you attended and we'll look into it.",
+      cta: "Contact Us"
+    },
+    result_already_know_immediate: {
+      result: true,
+      icon: "😄",
+      title: "Why are you even taking this quiz?!",
+      body: "You already know our immediate family policy! You're covered — up to 2 free events per year, plus 25% off all future events. Just reach out directly and we'll take care of you.",
+      cta: null
+    },
+    result_already_know_vip: {
+      result: true,
+      icon: "💛",
+      title: "You already know the deal!",
+      body: "You're one of our closest people — you already know how this works. Up to 2 free events per year, plus 25% off all future events. Just reach out directly.",
+      cta: null
+    },
+    result_20: {
+      result: true,
+      icon: "🎊",
+      title: "You qualify for 20% off!",
+      body: "You're in the inner circle! Reach out and we'll send you your personal discount code to use at booking.",
+      cta: "Get Your 20% Code"
+    },
+    result_15: {
+      result: true,
+      icon: "🎊",
+      title: "You qualify for 15% off!",
+      body: "Great news! Reach out and we'll send you your personal discount code to use at booking.",
+      cta: "Get Your 15% Code"
+    },
+    result_might_15_lorenne: {
+      result: true,
+      icon: "🤔",
+      title: "You might qualify for 15% off!",
+      body: "You're probably in the right range, but Lorenne may need to confirm she knows you. Reach out, mention how you know her, and we'll get it sorted!",
+      cta: "Reach Out to Claim"
+    },
+    result_might_15_katy: {
+      result: true,
+      icon: "🤔",
+      title: "You might qualify for 15% off!",
+      body: "You're probably in the right range, but Katy may need to confirm she knows you. Reach out, mention how you know her, and we'll get it sorted!",
+      cta: "Reach Out to Claim"
+    },
+    result_no_discount_family: {
+      result: true,
+      icon: "💙",
+      title: "No discount today, but we'd love your business!",
+      body: "It looks like you're just outside our discount range. If you feel like you qualify and we got it wrong, reach out — we'll see what we can do!",
+      cta: "Contact Us"
+    }
+  };
+
+  let history = [];
+  let current = "start";
+
+  function render(stepId) {
+    const step = steps[stepId];
+    const qWrap = document.getElementById("quiz-q-wrap");
+    const rWrap = document.getElementById("quiz-r-wrap");
+    const backBtn = document.getElementById("quiz-back");
+
+    backBtn.style.display = history.length > 0 ? "inline" : "none";
+
+    if (step.result) {
+      qWrap.style.display = "none";
+      rWrap.style.display = "block";
+      document.getElementById("quiz-r-icon").textContent = step.icon;
+      document.getElementById("quiz-r-title").textContent = step.title;
+      document.getElementById("quiz-r-body").textContent = step.body;
+      const cta = document.getElementById("quiz-r-cta");
+      if (step.cta) {
+        cta.textContent = step.cta;
+        cta.style.display = "inline-block";
+      } else {
+        cta.style.display = "none";
+      }
+    } else {
+      qWrap.style.display = "block";
+      rWrap.style.display = "none";
+      document.getElementById("quiz-q").textContent = step.q;
+      const optsEl = document.getElementById("quiz-opts");
+      optsEl.innerHTML = "";
+      step.opts.forEach(function(opt) {
+        const btn = document.createElement("button");
+        btn.className = "quiz-opt-btn";
+        btn.textContent = opt.label;
+        btn.onclick = function() { goTo(opt.next); };
+        optsEl.appendChild(btn);
+      });
+    }
+  }
+
+  function goTo(stepId) {
+    history.push(current);
+    current = stepId;
+    render(current);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function goBack() {
+    if (history.length > 0) {
+      current = history.pop();
+      render(current);
+    }
+  }
+
+  function restart() {
+    history = [];
+    current = "start";
+    render(current);
+  }
+
+  render("start");
+  </script>
+
+</body>
+</html>

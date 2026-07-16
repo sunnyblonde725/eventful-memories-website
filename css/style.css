@@ -704,6 +704,119 @@ form textarea {
   margin-bottom: 1.25rem;
 }
 
+/* ── Discount Quiz ── */
+.quiz-wrap {
+  max-width: 560px;
+  margin: 2rem 0 3rem;
+}
+
+.quiz-question {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  color: var(--text);
+  margin-bottom: 1.75rem;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+.quiz-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.quiz-opt-btn {
+  background: var(--cream-dark);
+  border: 1px solid #d4c9b8;
+  color: var(--text);
+  padding: 0.95rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+  line-height: 1.4;
+}
+
+.quiz-opt-btn:hover {
+  border-color: var(--gold);
+  background: #e8dfd0;
+}
+
+.quiz-nav {
+  margin-top: 1.5rem;
+}
+
+.quiz-back-btn {
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.quiz-back-btn:hover { color: var(--text); }
+
+.quiz-result {
+  padding: 1rem 0;
+}
+
+.quiz-result-icon {
+  font-size: 2.75rem;
+  margin-bottom: 1rem;
+}
+
+.quiz-result-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
+
+.quiz-result-body {
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.quiz-restart-btn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-size: 0.85rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 1rem;
+  transition: color 0.2s;
+}
+
+.quiz-restart-btn:hover { color: var(--text); }
+
+.quiz-disclaimer {
+  color: var(--gray);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  max-width: 560px;
+  margin-top: 1rem;
+}
+
+.quiz-disclaimer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.quiz-disclaimer a:hover { text-decoration: underline; }
+
 /* ── Contact Section ── */
 .contact-section {
   background: var(--cream-dark);
