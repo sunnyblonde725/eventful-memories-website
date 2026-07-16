@@ -101,6 +101,7 @@ function renderQuoteBuilder() {
   container.addEventListener("change", updateTotal);
   document.getElementById("hours-minus")?.addEventListener("click", () => changeHours(-1));
   document.getElementById("hours-plus")?.addEventListener("click", () => changeHours(1));
+  document.getElementById("inq-guests")?.addEventListener("input", updateTotal);
 
   updateTotal();
 }
@@ -110,6 +111,19 @@ function changeHours(delta) {
   const next = Math.max(0, parseInt(el.textContent) + delta);
   el.textContent = next;
   updateTotal();
+}
+
+function getLargeSurcharge() {
+  const selectedVariation = document.querySelector('input[name="variation"]:checked');
+  if (!selectedVariation) return 0;
+  const label = selectedVariation.closest("label");
+  const name = label?.querySelector("span:nth-child(2)")?.textContent?.toLowerCase() || "";
+  if (!name.includes("large")) return 0;
+
+  const guests = parseInt(document.getElementById("inq-guests")?.value || 0);
+  if (!guests || guests <= 150) return 0;
+
+  return Math.ceil((guests - 150) / 100) * 10000; // $100 per 100 guests over 150
 }
 
 function updateTotal() {
@@ -126,7 +140,19 @@ function updateTotal() {
   const additionalTimeList = catalogData.modifierLists.find((l) => l.name === "Additional Time");
   const hourRate = additionalTimeList?.modifiers[0]?.price || 7500;
 
-  const total = basePrice + modTotal + (hours * hourRate);
+  const surcharge = getLargeSurcharge();
+  const surchargeRow = document.getElementById("guest-surcharge-row");
+  if (surcharge > 0) {
+    const guests = parseInt(document.getElementById("inq-guests")?.value || 0);
+    const extraTiers = Math.ceil((guests - 150) / 100);
+    document.getElementById("guest-surcharge-label").textContent = `Guest count (${extraTiers}× 100 guests over 150)`;
+    document.getElementById("guest-surcharge-amount").textContent = `+$${(surcharge / 100).toFixed(2)}`;
+    surchargeRow.style.display = "flex";
+  } else if (surchargeRow) {
+    surchargeRow.style.display = "none";
+  }
+
+  const total = basePrice + modTotal + (hours * hourRate) + surcharge;
   document.getElementById("quote-price").textContent = `$${(total / 100).toFixed(2)}`;
 }
 
@@ -158,6 +184,14 @@ function buildLineItems() {
     const name = label?.querySelector("span:nth-child(2)")?.textContent?.trim() || "Add-on";
     items.push({ name, amountCents: price, quantity: 1, isPackage: false });
   });
+
+  // Large package guest surcharge
+  const surcharge = getLargeSurcharge();
+  if (surcharge > 0) {
+    const guests = parseInt(document.getElementById("inq-guests")?.value || 0);
+    const extraTiers = Math.ceil((guests - 150) / 100);
+    items.push({ name: `Guest Count Surcharge (${extraTiers}× 100 guests over 150)`, amountCents: 10000, quantity: extraTiers, isPackage: false });
+  }
 
   return items;
 }

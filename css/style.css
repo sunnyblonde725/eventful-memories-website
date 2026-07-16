@@ -331,6 +331,17 @@ form textarea {
   font-size: 1.1rem;
 }
 
+.quote-surcharge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  font-size: 0.9rem;
+  color: var(--gray);
+  border-top: 1px solid var(--cream-dark);
+  margin-top: 0.5rem;
+}
+
 .quote-total {
   display: flex;
   justify-content: space-between;
@@ -818,93 +829,52 @@ form textarea {
 .quiz-disclaimer a:hover { text-decoration: underline; }
 
 /* ── Contact Section ── */
-.contact-section {
-  background: var(--cream-dark);
-  padding: 5rem 2rem;
+/* ── Reach Section (combined collab + contact) ── */
+.reach-section {
+  background: #7a4a22;
+  padding: 5.5rem 2rem;
   text-align: center;
 }
 
-.contact-inner {
-  max-width: 600px;
+.reach-inner {
+  max-width: 580px;
   margin: 0 auto;
 }
 
-.contact-inner h2 {
+.reach-section h2 {
   font-family: var(--font-heading);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  color: var(--gold);
-  margin-bottom: 0.75rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--gold-light);
+  margin-bottom: 1.25rem;
   letter-spacing: 0.03em;
 }
 
-.contact-tagline {
-  color: var(--gray);
+.reach-section p {
+  color: rgba(245, 240, 232, 0.78);
   font-size: 1rem;
-  margin-bottom: 1.5rem;
+  line-height: 1.85;
+  margin-bottom: 1.75rem;
 }
 
-.contact-email {
+.reach-email {
   display: inline-block;
-  color: var(--gold);
+  color: var(--gold-light);
   text-decoration: none;
   font-size: 1.05rem;
   letter-spacing: 0.04em;
-  margin-bottom: 2.5rem;
+  margin-bottom: 0;
   transition: opacity 0.2s;
 }
 
-.contact-email:hover { opacity: 0.7; }
+.reach-email:hover { opacity: 0.7; }
 
-.collab-note {
-  color: var(--gray);
-  font-size: 0.9rem;
-  line-height: 1.75;
-  padding-top: 1.75rem;
-  border-top: 1px solid #d4c9b8;
-}
-
-.collab-note a {
-  color: var(--gold);
-  text-decoration: none;
-}
-
-.collab-note a:hover { text-decoration: underline; }
-
-/* ── Collab Section ── */
-.collab-section {
-  background: var(--black);
-  padding: 6rem 2rem;
-  text-align: center;
-}
-
-.collab-inner {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.collab-section h2 {
-  font-family: var(--font-heading);
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--gold);
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.03em;
-}
-
-.collab-section p {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 1rem;
-  line-height: 1.85;
-  margin-bottom: 2.5rem;
-}
-
-.btn--light {
-  border-color: rgba(255, 255, 255, 0.45);
-  color: #fff;
-}
-
-.btn--light:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+.reach-note {
+  color: rgba(245, 240, 232, 0.45);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(245, 240, 232, 0.15);
 }
 
 /* ── Policy Page ── */

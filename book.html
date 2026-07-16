@@ -30,6 +30,11 @@
     <div id="quote-builder" style="display:none;">
       <div id="quote-items"></div>
 
+      <div id="guest-surcharge-row" class="quote-surcharge-row" style="display:none;">
+        <span id="guest-surcharge-label"></span>
+        <span id="guest-surcharge-amount"></span>
+      </div>
+
       <div class="quote-total">
         <span>Estimated Total:</span>
         <span id="quote-price">$400.00</span>
@@ -46,6 +51,7 @@
           <span class="form-label">Event Date</span>
           <input type="date" id="inq-date" name="event-date" required />
         </div>
+        <input type="number" id="inq-guests" name="guests" placeholder="Approximate Guest Count" min="1" max="5000" />
         <input type="text" id="inq-venue" name="venue" placeholder="Venue / Location" />
         <textarea id="inq-message" name="message" placeholder="Anything else we should know? (optional)"></textarea>
         <button type="submit" class="btn" id="booking-submit-btn">Book Now</button>
@@ -57,20 +63,12 @@
     </div>
   </div>
 
-  <div class="collab-section">
-    <div class="collab-inner">
+  <div class="reach-section">
+    <div class="reach-inner">
       <h2>Let's Work Together</h2>
-      <p>Are you a photographer, venue, or event organizer? We're always open to building something great with the right people — referral partnerships, vendor collabs, recurring event setups, and more.</p>
-      <a href="mailto:inquiry@eventfulmemoriesco.com" class="btn btn--light">Get in Touch</a>
-    </div>
-  </div>
-
-  <div class="contact-section">
-    <div class="contact-inner">
-      <h2>Get in Touch</h2>
-      <p class="contact-tagline">Not ready to book yet? Just want to ask something? We're here.</p>
-      <a href="mailto:inquiry@eventfulmemoriesco.com" class="contact-email">inquiry@eventfulmemoriesco.com</a>
-      <p class="collab-note">Vendor or partnership inquiry? <a href="mailto:inquiry@eventfulmemoriesco.com">Drop us a line</a> — we'd love to connect.</p>
+      <p>Whether you're a photographer, venue, or event organizer — or just someone who wants a great photo booth — we'd love to connect. Referral partnerships, vendor collabs, and recurring event setups are always on the table.</p>
+      <a href="mailto:inquiry@eventfulmemoriesco.com" class="reach-email">inquiry@eventfulmemoriesco.com</a>
+      <p class="reach-note">Not ready to book yet? Just want to ask a question? We're here for that too.</p>
     </div>
   </div>
 
