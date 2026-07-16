@@ -628,6 +628,36 @@ form textarea {
 .lightbox-prev { left: 0.5rem; }
 .lightbox-next { right: 0.5rem; }
 
+/* ── Date field with label ── */
+.form-field-labeled {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  color: var(--gray);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.form-field-labeled input[type="date"] {
+  background: var(--cream-dark);
+  border: 1px solid #d4c9b8;
+  color: var(--text);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.form-field-labeled input[type="date"]:focus {
+  border-color: var(--gold);
+}
+
 /* ── Square Booking Section ── */
 .square-booking {
   padding: 2rem 0 1.5rem;

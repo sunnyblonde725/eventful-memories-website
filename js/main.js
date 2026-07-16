@@ -130,23 +130,78 @@ function updateTotal() {
   document.getElementById("quote-price").textContent = `$${(total / 100).toFixed(2)}`;
 }
 
-document.getElementById("inquiry-form")?.addEventListener("submit", (e) => {
+function buildLineItems() {
+  const items = [];
+
+  // Selected package variation
+  const selectedVariation = document.querySelector('input[name="variation"]:checked');
+  if (selectedVariation && catalogData) {
+    const label = selectedVariation.closest("label");
+    const name = label?.querySelector("span:nth-child(2)")?.textContent?.trim() || "Package";
+    items.push({ name, amountCents: parseInt(selectedVariation.value), quantity: 1, isPackage: true });
+  }
+
+  // Additional hours
+  const hours = parseInt(document.getElementById("hours-count")?.textContent || 0);
+  if (hours > 0 && catalogData) {
+    const additionalTimeList = catalogData.modifierLists.find((l) => l.name === "Additional Time");
+    const hourRate = additionalTimeList?.modifiers[0]?.price || 7500;
+    items.push({ name: `Additional Hour${hours > 1 ? "s" : ""}`, amountCents: hourRate, quantity: hours, isPackage: false });
+  }
+
+  // Checked modifiers (checkboxes + radio groups excluding variation)
+  document.querySelectorAll("#quote-items input:checked").forEach((input) => {
+    if (input.name === "variation") return;
+    const price = parseInt(input.dataset.price || 0);
+    if (price === 0) return; // skip free/TBD items
+    const label = input.closest("label");
+    const name = label?.querySelector("span:nth-child(2)")?.textContent?.trim() || "Add-on";
+    items.push({ name, amountCents: price, quantity: 1, isPackage: false });
+  });
+
+  return items;
+}
+
+document.getElementById("inquiry-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const quotePrice = document.getElementById("quote-price")?.textContent || "Not calculated";
-  document.getElementById("inq-quote-summary").value = `Estimated total: ${quotePrice}`;
-  const form = e.target;
-  fetch("/", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams(new FormData(form)).toString(),
-  })
-    .then(() => {
-      form.style.display = "none";
-      document.getElementById("inquiry-success").style.display = "block";
-    })
-    .catch(() => {
-      alert("Something went wrong — please try again or email us at lorenne@eventfulmemoriesco.com");
+
+  const submitBtn = document.getElementById("booking-submit-btn");
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = "Sending...";
+  submitBtn.disabled = true;
+
+  const lineItems = buildLineItems();
+
+  const payload = {
+    name: document.getElementById("inq-name").value.trim(),
+    email: document.getElementById("inq-email").value.trim(),
+    phone: document.getElementById("inq-phone")?.value.trim() || "",
+    eventDate: document.getElementById("inq-date").value,
+    venue: document.getElementById("inq-venue").value.trim(),
+    message: document.getElementById("inq-message").value.trim(),
+    lineItems,
+  };
+
+  try {
+    const res = await fetch("/.netlify/functions/send-booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      e.target.style.display = "none";
+      document.getElementById("inquiry-success").style.display = "block";
+    } else {
+      throw new Error(data.error || "Something went wrong.");
+    }
+  } catch (err) {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+    alert(err.message || "Something went wrong — please try again or email us at lorenne@eventfulmemoriesco.com");
+  }
 });
 
 loadCatalog();

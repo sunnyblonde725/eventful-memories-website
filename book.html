@@ -21,8 +21,8 @@
   </header>
 
   <div class="book-page">
-    <h1>Build Your Quote</h1>
-    <p class="book-subtitle">Build your custom quote below, then book your date directly through Square — or send us a message if you have questions first.</p>
+    <h1>Book Your Event</h1>
+    <p class="book-subtitle">Build your quote, fill in your details, and hit submit — we'll send your Square deposit invoice straight to your inbox automatically. No waiting on us.</p>
 
     <div id="quote-loading">Loading packages...</div>
     <div id="quote-error" style="display:none; color:#b8922a;">Unable to load packages. Please try again later.</div>
@@ -35,29 +35,24 @@
         <span id="quote-price">$400.00</span>
       </div>
 
-      <div class="square-booking">
-        <h3>Book Your Date</h3>
-        <p class="square-booking-note">Ready to lock in your event? A 50% deposit is collected at booking to hold your date.</p>
-        <script src='https://square.site/appointments/buyer/widget/xfuydcl0jvm9n1/LTYA3CBXJBTJK.js'></script>
-      </div>
+      <p class="inquiry-label">Fill in your details and we'll send your deposit invoice automatically.</p>
 
-      <div class="booking-or"><span>or</span></div>
-
-      <p class="inquiry-label">Still have questions? Send us a message and we'll get back to you within 24 hours.</p>
-
-      <form id="inquiry-form" name="inquiry" data-netlify="true">
-        <input type="hidden" name="form-name" value="inquiry" />
-        <input type="hidden" id="inq-quote-summary" name="quote-summary" />
+      <form id="inquiry-form">
+        <input type="hidden" id="inq-line-items" name="line-items" />
         <input type="text" id="inq-name" name="name" placeholder="Your Name" required />
         <input type="email" id="inq-email" name="email" placeholder="Your Email" required />
-        <input type="text" id="inq-date" name="event-date" placeholder="Event Date (e.g. Aug 15, 2026)" required />
+        <input type="tel" id="inq-phone" name="phone" placeholder="Phone Number (optional)" />
+        <div class="form-field-labeled">
+          <span class="form-label">Event Date</span>
+          <input type="date" id="inq-date" name="event-date" required />
+        </div>
         <input type="text" id="inq-venue" name="venue" placeholder="Venue / Location" />
-        <textarea id="inq-message" name="message" placeholder="Tell us about your event..." required></textarea>
-        <button type="submit" class="btn">Send Inquiry</button>
+        <textarea id="inq-message" name="message" placeholder="Anything else we should know? (optional)"></textarea>
+        <button type="submit" class="btn" id="booking-submit-btn">Book Now</button>
       </form>
 
       <div id="inquiry-success" style="display:none;">
-        <p>Thanks! We'll be in touch within 24 hours.</p>
+        <p>Your deposit invoice is on its way! Check your email for a Square payment link — once you pay the deposit, your date is held.</p>
       </div>
     </div>
   </div>
