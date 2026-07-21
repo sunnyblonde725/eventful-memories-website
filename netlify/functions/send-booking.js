@@ -137,11 +137,15 @@ exports.handler = async (event) => {
     const invoiceVersion = invoiceRes.invoice.version ?? 0;
     console.log("Step 3 OK: invoiceId=", invoiceId, "version=", invoiceVersion);
 
+    // 3.5. Retrieve invoice to confirm state before sending
+    const retrieveRes = await square(`/invoices/${invoiceId}`, "GET", null);
+    console.log("Step 3.5: status=", retrieveRes.invoice.status, "version=", retrieveRes.invoice.version);
+
     // 4. Send the invoice (fires email to customer)
-    console.log("Step 4: Sending invoice", encodeURIComponent(invoiceId));
-    await square(`/invoices/${encodeURIComponent(invoiceId)}/send`, "POST", {
+    console.log("Step 4: Sending invoice");
+    await square(`/invoices/${invoiceId}/send`, "POST", {
       idempotency_key: `send-${Date.now()}`,
-      version: invoiceVersion,
+      version: retrieveRes.invoice.version,
     });
 
     console.log("Step 4 OK: invoice sent");
