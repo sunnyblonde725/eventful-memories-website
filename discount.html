@@ -203,10 +203,10 @@
       q: "How do you know Lorenne?",
       opts: [
         { label: "Work", next: "lorenne_work" },
-        { label: "School", next: "lorenne_school" },
+        { label: "School", next: "result_might_15_lorenne" },
         { label: "Church", next: "lorenne_church" },
         { label: "We're neighbors", next: "result_might_15_lorenne" },
-        { label: "We're just friends — she knows who I am", next: "result_might_15_lorenne" }
+        { label: "We're just friends — she knows who I am", next: "lorenne_school" }
       ]
     },
     lorenne_work: {
@@ -218,7 +218,7 @@
       ]
     },
     lorenne_school: {
-      q: "Are you one of these people?  Ben · Kayleigh · Maya · Leah · Luke",
+      q: "Are you one of these people?  Ben · Kaylee · Maya · Leah · Luke",
       opts: [
         { label: "Yes, that's me!", next: "result_20" },
         { label: "No", next: "result_might_15_lorenne" }
