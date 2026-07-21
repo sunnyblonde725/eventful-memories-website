@@ -1,7 +1,7 @@
 const { google } = require("googleapis");
 
 const SQUARE_VERSION = "2024-02-22";
-const SANDBOX = process.env.SQUARE_SANDBOX === "true";
+const SANDBOX = process.env.SQUARE_ENVIRONMENT === "sandbox";
 const SQUARE_BASE = SANDBOX
   ? "https://connect.squareupsandbox.com/v2"
   : "https://connect.squareup.com/v2";
@@ -68,7 +68,7 @@ exports.handler = async (event) => {
     balanceDue.setTime(depositDue.getTime());
   }
 
-  const locationId = SANDBOX ? process.env.SQUARE_SANDBOX_LOCATION_ID : process.env.SQUARE_LOCATION_ID;
+  const locationId = process.env.SQUARE_LOCATION_ID;
   if (!locationId) {
     return { statusCode: 500, body: JSON.stringify({ error: "Server configuration error. Please contact us directly." }) };
   }
