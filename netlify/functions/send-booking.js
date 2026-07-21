@@ -134,12 +134,14 @@ exports.handler = async (event) => {
       },
     });
     const invoiceId = invoiceRes.invoice.id;
-    console.log("Step 3 OK: invoiceId=", invoiceId);
+    const invoiceVersion = invoiceRes.invoice.version ?? 0;
+    console.log("Step 3 OK: invoiceId=", invoiceId, "version=", invoiceVersion);
 
     // 4. Send the invoice (fires email to customer)
-    console.log("Step 4: Sending invoice", invoiceId);
-    await square(`/invoices/${invoiceId}/send`, "POST", {
-      idempotency_key: `send-${invoiceId}`,
+    console.log("Step 4: Sending invoice", encodeURIComponent(invoiceId));
+    await square(`/invoices/${encodeURIComponent(invoiceId)}/send`, "POST", {
+      idempotency_key: `send-${Date.now()}`,
+      version: invoiceVersion,
     });
 
     console.log("Step 4 OK: invoice sent");
