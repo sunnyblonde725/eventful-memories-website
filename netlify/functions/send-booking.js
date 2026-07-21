@@ -63,9 +63,10 @@ exports.handler = async (event) => {
   const balanceDue = new Date(eventDay);
   balanceDue.setDate(balanceDue.getDate() - 7);
 
-  // If event is less than 7 days away, balance is due same as deposit
+  // If event is less than 7 days away, balance is due the day after deposit
   if (balanceDue <= depositDue) {
     balanceDue.setTime(depositDue.getTime());
+    balanceDue.setDate(balanceDue.getDate() + 1);
   }
 
   const locationId = process.env.SQUARE_LOCATION_ID;
