@@ -76,6 +76,7 @@ exports.handler = async (event) => {
 
   try {
     // 1. Create Square customer
+    console.log("Step 1: Creating customer for", email);
     const customerRes = await square("/customers", "POST", {
       given_name: firstName,
       family_name: lastName,
@@ -84,8 +85,10 @@ exports.handler = async (event) => {
       idempotency_key: `customer-${email}-${Date.now()}`,
     });
     const customerId = customerRes.customer.id;
+    console.log("Step 1 OK: customerId=", customerId);
 
     // 2. Create Square order with line items
+    console.log("Step 2: Creating order at location", locationId, "lineItems=", JSON.stringify(lineItems));
     const orderRes = await square("/orders", "POST", {
       idempotency_key: `order-${email}-${Date.now()}`,
       order: {
@@ -103,8 +106,10 @@ exports.handler = async (event) => {
       },
     });
     const orderId = orderRes.order.id;
+    console.log("Step 2 OK: orderId=", orderId);
 
     // 3. Create Square invoice with 50% deposit + balance schedule
+    console.log("Step 3: Creating invoice. depositDue=", isoDate(depositDue), "balanceDue=", isoDate(balanceDue));
     const invoiceRes = await square("/invoices", "POST", {
       idempotency_key: `invoice-${email}-${Date.now()}`,
       invoice: {
@@ -129,12 +134,15 @@ exports.handler = async (event) => {
       },
     });
     const invoiceId = invoiceRes.invoice.id;
+    console.log("Step 3 OK: invoiceId=", invoiceId);
 
     // 4. Send the invoice (fires email to customer)
+    console.log("Step 4: Sending invoice", invoiceId);
     await square(`/invoices/${invoiceId}/send`, "POST", {
       idempotency_key: `send-${invoiceId}`,
     });
 
+    console.log("Step 4 OK: invoice sent");
     // 5. Google Calendar — add pending event (non-fatal if this fails)
     if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
       try {
