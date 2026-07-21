@@ -1,13 +1,19 @@
 const { google } = require("googleapis");
 
-const SQUARE_BASE = "https://connect.squareup.com/v2";
 const SQUARE_VERSION = "2024-02-22";
+const SANDBOX = process.env.SQUARE_SANDBOX === "true";
+const SQUARE_BASE = SANDBOX
+  ? "https://connect.squareupsandbox.com/v2"
+  : "https://connect.squareup.com/v2";
+const SQUARE_TOKEN = SANDBOX
+  ? process.env.SQUARE_SANDBOX_TOKEN
+  : process.env.SQUARE_PRODUCTION_TOKEN;
 
 async function square(path, method, body) {
   const res = await fetch(`${SQUARE_BASE}${path}`, {
     method,
     headers: {
-      Authorization: `Bearer ${process.env.SQUARE_PRODUCTION_TOKEN}`,
+      Authorization: `Bearer ${SQUARE_TOKEN}`,
       "Content-Type": "application/json",
       "Square-Version": SQUARE_VERSION,
     },
@@ -62,7 +68,7 @@ exports.handler = async (event) => {
     balanceDue.setTime(depositDue.getTime());
   }
 
-  const locationId = process.env.SQUARE_LOCATION_ID;
+  const locationId = SANDBOX ? process.env.SQUARE_SANDBOX_LOCATION_ID : process.env.SQUARE_LOCATION_ID;
   if (!locationId) {
     return { statusCode: 500, body: JSON.stringify({ error: "Server configuration error. Please contact us directly." }) };
   }
