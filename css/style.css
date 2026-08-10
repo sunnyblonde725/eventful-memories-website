@@ -183,6 +183,61 @@ section h2 {
   opacity: 0.85;
 }
 
+/* ── Testimonials ── */
+#testimonials {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: var(--cream-dark);
+}
+
+#testimonials h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--gold);
+  margin-bottom: 3rem;
+  letter-spacing: 0.03em;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background: var(--cream);
+  border: 1px solid #ddd5c4;
+  padding: 2rem 2rem 1.5rem;
+  text-align: left;
+  position: relative;
+}
+
+.testimonial-card p {
+  font-size: 0.97rem;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+
+.testimonial-card p::before {
+  content: '\201C';
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: var(--gold-light);
+  line-height: 0;
+  vertical-align: -0.6rem;
+  margin-right: 0.15rem;
+}
+
+.testimonial-card cite {
+  font-style: normal;
+  font-size: 0.875rem;
+  color: var(--gray);
+  letter-spacing: 0.03em;
+}
+
 /* ── Book Form ── */
 #book {
   max-width: 600px;
