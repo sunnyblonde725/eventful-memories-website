@@ -17,6 +17,8 @@ function formatPrice(cents, name) {
   return `+$${(cents / 100).toFixed(2)}`;
 }
 
+const COMING_SOON = new Set(["Backdrop:Green screen", "Props:We provide", "Guest Book:Guest book"]);
+
 function renderQuoteBuilder() {
   const { items, modifierLists } = catalogData;
   const item = items[0];
@@ -78,15 +80,20 @@ function renderQuoteBuilder() {
         (m) => m.name.toLowerCase().includes("provide") || m.name.toLowerCase().includes("client")
       );
 
+      const defaultsToClientProvided = ["Backdrop", "Border/Overlay"].includes(list.name);
+
       list.modifiers.forEach((mod) => {
         const row = document.createElement("label");
-        row.className = "quote-modifier-row";
+        const isComingSoon = COMING_SOON.has(`${list.name}:${mod.name}`);
+        row.className = "quote-modifier-row" + (isComingSoon ? " quote-modifier-row--unavailable" : "");
         const inputType = isChoice ? "radio" : "checkbox";
         const inputName = isChoice ? `mod-${list.id}` : `mod-${list.id}-${mod.id}`;
+        const isDefault = defaultsToClientProvided && mod.name === "Client provides";
+        const priceLabel = isComingSoon ? "Coming Soon" : formatPrice(mod.price, mod.name);
         row.innerHTML = `
-          <input type="${inputType}" name="${inputName}" value="${mod.id}" data-price="${mod.price}" />
+          <input type="${inputType}" name="${inputName}" value="${mod.id}" data-price="${mod.price}" ${isDefault ? "checked" : ""} ${isComingSoon ? "disabled" : ""} />
           <span>${mod.name}</span>
-          <span class="mod-price">${formatPrice(mod.price, mod.name)}</span>
+          <span class="mod-price">${priceLabel}</span>
         `;
         section.appendChild(row);
       });
@@ -121,9 +128,9 @@ function getLargeSurcharge() {
   if (!name.includes("large")) return 0;
 
   const guests = parseInt(document.getElementById("inq-guests")?.value || 0);
-  if (!guests || guests <= 150) return 0;
+  if (!guests || guests <= 250) return 0;
 
-  return Math.ceil((guests - 150) / 100) * 10000; // $100 per 100 guests over 150
+  return Math.ceil((guests - 250) / 100) * 10000; // $100 per 100 guests over 250
 }
 
 function updateTotal() {
@@ -144,8 +151,8 @@ function updateTotal() {
   const surchargeRow = document.getElementById("guest-surcharge-row");
   if (surcharge > 0) {
     const guests = parseInt(document.getElementById("inq-guests")?.value || 0);
-    const extraTiers = Math.ceil((guests - 150) / 100);
-    document.getElementById("guest-surcharge-label").textContent = `Guest count (${extraTiers}× 100 guests over 150)`;
+    const extraTiers = Math.ceil((guests - 250) / 100);
+    document.getElementById("guest-surcharge-label").textContent = `Guest count (${extraTiers}× 100 guests over 250)`;
     document.getElementById("guest-surcharge-amount").textContent = `+$${(surcharge / 100).toFixed(2)}`;
     surchargeRow.style.display = "flex";
   } else if (surchargeRow) {
@@ -189,8 +196,8 @@ function buildLineItems() {
   const surcharge = getLargeSurcharge();
   if (surcharge > 0) {
     const guests = parseInt(document.getElementById("inq-guests")?.value || 0);
-    const extraTiers = Math.ceil((guests - 150) / 100);
-    items.push({ name: `Guest Count Surcharge (${extraTiers}× 100 guests over 150)`, amountCents: 10000, quantity: extraTiers, isPackage: false });
+    const extraTiers = Math.ceil((guests - 250) / 100);
+    items.push({ name: `Guest Count Surcharge (${extraTiers}× 100 guests over 250)`, amountCents: 10000, quantity: extraTiers, isPackage: false });
   }
 
   return items;
@@ -212,6 +219,7 @@ document.getElementById("inquiry-form")?.addEventListener("submit", async (e) =>
     phone: document.getElementById("inq-phone")?.value.trim() || "",
     eventDate: document.getElementById("inq-date").value,
     venue: document.getElementById("inq-venue").value.trim(),
+    promoCode: document.getElementById("inq-promo")?.value.trim() || "",
     message: document.getElementById("inq-message").value.trim(),
     lineItems,
   };

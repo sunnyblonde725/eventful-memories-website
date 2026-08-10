@@ -74,6 +74,68 @@ nav a:hover {
   color: var(--gold);
 }
 
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+}
+
+@media (max-width: 700px) {
+  nav {
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  nav ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--cream);
+    border-bottom: 1px solid var(--cream-dark);
+    padding: 0.5rem 2rem 1rem;
+  }
+
+  nav ul.nav-open {
+    display: flex;
+  }
+
+  nav ul li {
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--cream-dark);
+  }
+
+  nav ul li:first-child {
+    border-top: none;
+  }
+
+  .pricing-grid,
+  .pricing-teaser,
+  .portfolio-grid,
+  .portfolio-grid-full {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── Hero ── */
 #hero {
   min-height: 100vh;
@@ -167,7 +229,7 @@ section h2 {
 /* ── Portfolio ── */
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
 }
 
@@ -350,6 +412,16 @@ form textarea {
   white-space: nowrap;
 }
 
+.quote-modifier-row--unavailable {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quote-modifier-row--unavailable .mod-price {
+  color: var(--gold-light);
+  font-style: italic;
+}
+
 .quote-stepper {
   display: flex;
   align-items: center;
@@ -456,7 +528,7 @@ form textarea {
 /* ── Pricing Cards (full page) ── */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
   margin-bottom: 4rem;
 }
@@ -575,7 +647,7 @@ form textarea {
 /* ── Pricing Teaser (homepage) ── */
 .pricing-teaser {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
   margin: 2rem 0 0;
 }
@@ -616,7 +688,7 @@ form textarea {
 /* ── Portfolio Full Page ── */
 .portfolio-grid-full {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
   margin-bottom: 1rem;
 }

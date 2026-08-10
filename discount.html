@@ -11,7 +11,10 @@
   <header>
     <nav>
       <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Eventful Memories</a></div>
-      <ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-menu">
         <li><a href="index.html#about">About</a></li>
         <li><a href="portfolio.html">Portfolio</a></li>
         <li><a href="pricing.html">Pricing</a></li>
@@ -392,5 +395,6 @@
   render("start");
   </script>
 
+  <script src="js/nav.js"></script>
 </body>
 </html>

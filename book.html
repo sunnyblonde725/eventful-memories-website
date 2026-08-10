@@ -11,7 +11,10 @@
   <header>
     <nav>
       <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Eventful Memories</a></div>
-      <ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-menu">
         <li><a href="index.html#about">About</a></li>
         <li><a href="portfolio.html">Portfolio</a></li>
         <li><a href="pricing.html">Pricing</a></li>
@@ -53,6 +56,7 @@
         </div>
         <input type="number" id="inq-guests" name="guests" placeholder="Approximate Guest Count" min="1" max="5000" />
         <input type="text" id="inq-venue" name="venue" placeholder="Venue / Location" />
+        <input type="text" id="inq-promo" name="promo-code" placeholder="Promo Code (optional)" />
         <textarea id="inq-message" name="message" placeholder="Anything else we should know? (optional)"></textarea>
         <button type="submit" class="btn" id="booking-submit-btn">Book Now</button>
       </form>
@@ -76,6 +80,7 @@
     <p>&copy; 2026 Eventful Memories LLC &nbsp;·&nbsp; <a href="policy.html" class="footer-link">Policies</a></p>
   </footer>
 
+  <script src="js/nav.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

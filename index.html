@@ -11,7 +11,10 @@
   <header>
     <nav>
       <div class="logo">Eventful Memories</div>
-      <ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-menu">
         <li><a href="#about">About</a></li>
         <li><a href="portfolio.html">Portfolio</a></li>
         <li><a href="pricing.html">Pricing</a></li>
@@ -54,12 +57,13 @@
         <div class="teaser-guests">51–150 guests</div>
       </div>
       <div class="pricing-teaser-card">
-        <h3>Large</h3>
+        <h3>Large*</h3>
         <div class="teaser-price">$500</div>
-        <div class="teaser-guests">150+ guests</div>
+        <div class="teaser-guests">151–250 guests</div>
       </div>
     </div>
-    <p style="color:var(--gray); font-size:0.9rem; margin: 1.5rem 0 2rem;">Every package includes 3 hours, setup & teardown, unlimited prints, and an on-site attendant.</p>
+    <p style="color:var(--gray); font-size:0.9rem; margin: 1.5rem 0 0.5rem;">Every package includes 3 hours, setup & teardown, unlimited prints, and an on-site attendant.</p>
+    <p style="color:var(--gray); font-size:0.85rem; margin: 0 0 2rem;">* $100 per 100 guests above 250</p>
     <a href="pricing.html" class="btn">See Full Pricing</a>
   </section>
 
@@ -116,6 +120,7 @@
     <p>&copy; 2026 Eventful Memories LLC &nbsp;·&nbsp; <a href="policy.html" class="footer-link">Policies</a></p>
   </footer>
 
+  <script src="js/nav.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

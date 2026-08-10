@@ -33,6 +33,20 @@ function friendlyDate(dateStr) {
   return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 }
 
+// PROMO_CODES env var is a JSON object like {"please": 5} — code -> percent off.
+// Add/remove codes in Netlify without a code change.
+function getPromoDiscountPercent(code) {
+  if (!code) return null;
+  let codes;
+  try {
+    codes = JSON.parse(process.env.PROMO_CODES || "{}");
+  } catch {
+    return null;
+  }
+  const percent = codes[code.trim().toLowerCase()];
+  return typeof percent === "number" ? percent : null;
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method not allowed" };
@@ -45,11 +59,13 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "Invalid request." }) };
   }
 
-  const { name, email, phone, eventDate, venue, message, lineItems } = body;
+  const { name, email, phone, eventDate, venue, message, lineItems, promoCode } = body;
 
   if (!name || !email || !eventDate || !lineItems?.length) {
     return { statusCode: 400, body: JSON.stringify({ error: "Please fill in all required fields." }) };
   }
+
+  const promoPercent = getPromoDiscountPercent(promoCode);
 
   const nameParts = name.trim().split(" ");
   const firstName = nameParts[0];
@@ -96,6 +112,9 @@ exports.handler = async (event) => {
           quantity: String(item.quantity || 1),
           base_price_money: { amount: item.amountCents, currency: "USD" },
         })),
+        discounts: promoPercent
+          ? [{ name: `Promo: ${promoCode.trim()}`, percentage: String(promoPercent), scope: "ORDER" }]
+          : undefined,
         metadata: {
           event_date: eventDate,
           venue: venue || "",
@@ -172,6 +191,7 @@ exports.handler = async (event) => {
           `Package: ${packageName}`,
           addons ? `Add-ons: ${addons}` : null,
           `Estimated Total: ${totalDisplay}`,
+          promoPercent ? `Promo code: ${promoCode.trim()} (${promoPercent}% off)` : null,
           ``,
           `⏳ Awaiting deposit payment via Square invoice.`,
           message ? `\nClient note: ${message}` : null,
