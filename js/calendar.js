@@ -23,10 +23,13 @@ const cal = {
 
 async function fetchWindow(y, m) {
   const key = monthKey(y, m);
-  if (cal.fetched.has(key)) return;
+  if (cal.fetched.has(key)) {
+    renderGrid(); // cached — still need to re-render for the new month
+    return;
+  }
 
   cal.loading = true;
-  renderGrid();
+  renderGrid(); // renderGrid disables nav buttons while loading
 
   try {
     const res = await fetch(`/.netlify/functions/availability?start=${dayIso(y, m, 1)}`);
@@ -65,8 +68,8 @@ function renderGrid() {
 
   const prevBtn = document.getElementById("cal-prev");
   const nextBtn = document.getElementById("cal-next");
-  prevBtn.disabled = y < now.getFullYear() || (y === now.getFullYear() && m <= now.getMonth());
-  nextBtn.disabled = new Date(y, m, 1) >= new Date(now.getFullYear(), now.getMonth() + 12, 1);
+  prevBtn.disabled = cal.loading || y < now.getFullYear() || (y === now.getFullYear() && m <= now.getMonth());
+  nextBtn.disabled = cal.loading || new Date(y, m, 1) >= new Date(now.getFullYear(), now.getMonth() + 12, 1);
 
   const firstDow = new Date(y, m, 1).getDay();
   const daysInMonth = new Date(y, m + 1, 0).getDate();
