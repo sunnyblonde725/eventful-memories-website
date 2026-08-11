@@ -27,6 +27,27 @@
     <h1>Book Your Event</h1>
     <p class="book-subtitle">Build your quote, fill in your details, and hit submit — we'll send your Square deposit invoice straight to your inbox automatically. No waiting on us.</p>
 
+    <div class="avail-cal-wrap">
+      <h2 class="avail-cal-title">Check Availability</h2>
+      <p class="avail-cal-sub">Click an available date to pre-fill your booking form.</p>
+      <div class="avail-cal">
+        <div class="cal-header">
+          <button class="cal-nav-btn" id="cal-prev" aria-label="Previous month">&#8249;</button>
+          <span id="cal-label" class="cal-month-label"></span>
+          <button class="cal-nav-btn" id="cal-next" aria-label="Next month">&#8250;</button>
+        </div>
+        <div id="cal-grid" class="cal-grid"></div>
+        <div class="cal-legend">
+          <span class="cal-legend-item"><span class="cal-sw cal-sw--avail"></span>Available</span>
+          <span class="cal-legend-item"><span class="cal-sw cal-sw--unavail"></span>Unavailable</span>
+          <span class="cal-legend-item"><span class="cal-sw cal-sw--public"></span>Public Event</span>
+          <span class="cal-legend-item"><span class="cal-sw cal-sw--sel"></span>Selected</span>
+        </div>
+        <p id="cal-public-msg" class="cal-note cal-note--public" style="display:none;">We're out at a public event this day — come see us!</p>
+        <p id="cal-error" class="cal-note cal-note--error" style="display:none;">Couldn't load availability — go ahead and enter your date below, we'll confirm directly.</p>
+      </div>
+    </div>
+
     <div id="quote-loading">Loading packages...</div>
     <div id="quote-error" style="display:none; color:#b8922a;">Unable to load packages. Please try again later.</div>
 
@@ -82,5 +103,6 @@
 
   <script src="js/nav.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/calendar.js"></script>
 </body>
 </html>
