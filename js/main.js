@@ -17,7 +17,7 @@ function formatPrice(cents, name) {
   return `+$${(cents / 100).toFixed(2)}`;
 }
 
-const COMING_SOON = new Set(["Backdrop:Green screen", "Props:We provide", "Guest Book:Guest book"]);
+const COMING_SOON = new Set(["Backdrop:Green screen", "Backdrop:We provide", "Backdrop:AI backdrop", "Props:We provide", "Guest Book:Guest book"]);
 
 function renderQuoteBuilder() {
   const { items, modifierLists } = catalogData;
@@ -42,6 +42,7 @@ function renderQuoteBuilder() {
     <h3>${item.name}</h3>
     <p class="quote-desc">${item.description}</p>
     ${variationsHTML}
+    <p class="pricing-note" style="margin-top:0.5rem;">* Large events over 250 guests: +$100 per additional 100 guests.</p>
   `;
   container.appendChild(baseEl);
 
@@ -80,7 +81,7 @@ function renderQuoteBuilder() {
         (m) => m.name.toLowerCase().includes("provide") || m.name.toLowerCase().includes("client")
       );
 
-      const defaultsToClientProvided = ["Backdrop", "Border/Overlay"].includes(list.name);
+      const defaultsToClientProvided = ["Backdrop", "Border/Overlay", "Props"].includes(list.name);
 
       list.modifiers.forEach((mod) => {
         const row = document.createElement("label");
@@ -203,22 +204,48 @@ function buildLineItems() {
   return items;
 }
 
-document.getElementById("inquiry-form")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+// ── Step 1 → Step 2: Continue button ──
+document.getElementById("booking-continue-btn")?.addEventListener("click", () => {
+  const form = document.getElementById("inquiry-form");
+  const required = form.querySelectorAll("[required]");
+  let valid = true;
+  required.forEach((el) => {
+    if (!el.value.trim()) {
+      el.style.borderColor = "#c0392b";
+      valid = false;
+    } else {
+      el.style.borderColor = "";
+    }
+  });
+  if (!valid) {
+    form.querySelector("[required]:invalid, [required]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
 
-  const submitBtn = document.getElementById("booking-submit-btn");
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = "Sending...";
-  submitBtn.disabled = true;
+  // Pre-fill name and email in the Google Form
+  const name = encodeURIComponent(document.getElementById("inq-name").value.trim());
+  const email = encodeURIComponent(document.getElementById("inq-email").value.trim());
+  document.getElementById("agreement-frame").src =
+    `https://docs.google.com/forms/d/e/1FAIpQLSfToULoCoox4tvHOg3g0v2Fgf2o9VX2JWKfRmh9y7gO6mgS6g/viewform?embedded=true&entry.887194872=${name}&entry.877313115=${email}`;
+
+  document.getElementById("booking-step-2").style.display = "block";
+  document.getElementById("booking-step-2").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// ── Booking submission (called automatically when agreement is signed) ──
+async function submitBooking() {
+  document.getElementById("booking-processing").style.display = "block";
+  document.getElementById("booking-processing").scrollIntoView({ behavior: "smooth", block: "center" });
 
   const lineItems = buildLineItems();
-
   const payload = {
     name: document.getElementById("inq-name").value.trim(),
     email: document.getElementById("inq-email").value.trim(),
     phone: document.getElementById("inq-phone")?.value.trim() || "",
     eventDate: document.getElementById("inq-date").value,
     venue: document.getElementById("inq-venue").value.trim(),
+    eventType: document.getElementById("inq-event-type")?.value.trim() || "",
+    eventDescription: document.getElementById("inq-event-desc")?.value.trim() || "",
     promoCode: document.getElementById("inq-promo")?.value.trim() || "",
     message: document.getElementById("inq-message").value.trim(),
     lineItems,
@@ -230,11 +257,11 @@ document.getElementById("inquiry-form")?.addEventListener("submit", async (e) =>
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-
     const data = await res.json();
 
     if (res.ok && data.success) {
-      e.target.style.display = "none";
+      document.getElementById("inquiry-form").style.display = "none";
+      document.getElementById("booking-step-2").style.display = "none";
       const successEl = document.getElementById("inquiry-success");
       if (data.paymentUrl) {
         const linkEl = document.getElementById("deposit-pay-link");
@@ -244,13 +271,24 @@ document.getElementById("inquiry-form")?.addEventListener("submit", async (e) =>
         }
       }
       successEl.style.display = "block";
+      successEl.scrollIntoView({ behavior: "smooth", block: "center" });
     } else {
       throw new Error(data.error || "Something went wrong.");
     }
-  } catch (err) {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
-    alert(err.message || "Something went wrong — please try again or email us at inquiry@eventfulmemoriesco.com");
+  } catch {
+    document.getElementById("booking-processing").style.display = "none";
+    document.getElementById("booking-error").style.display = "block";
+    document.getElementById("booking-error").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+// ── Detect Google Form submission via iframe load count ──
+let frameLoads = 0;
+document.getElementById("agreement-frame")?.addEventListener("load", () => {
+  frameLoads++;
+  if (frameLoads >= 2) {
+    document.getElementById("agreement-frame").style.display = "none";
+    submitBooking();
   }
 });
 

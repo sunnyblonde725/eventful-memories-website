@@ -19,6 +19,7 @@
         <li><a href="portfolio.html">Portfolio</a></li>
         <li><a href="pricing.html">Pricing</a></li>
         <li><a href="book.html">Book</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -64,9 +65,9 @@
         <span id="quote-price">$400.00</span>
       </div>
 
-      <p class="inquiry-label">Fill in your details and we'll send your deposit invoice automatically.</p>
+      <p class="inquiry-label">Fill in your details below, then review and sign your booking agreement before we send your invoice.</p>
 
-      <form id="inquiry-form">
+      <form id="inquiry-form" novalidate>
         <input type="hidden" id="inq-line-items" name="line-items" />
         <input type="text" id="inq-name" name="name" placeholder="Your Name" required />
         <input type="email" id="inq-email" name="email" placeholder="Your Email" required />
@@ -77,13 +78,41 @@
         </div>
         <input type="number" id="inq-guests" name="guests" placeholder="Approximate Guest Count" min="1" max="5000" />
         <input type="text" id="inq-venue" name="venue" placeholder="Venue / Location" />
+        <input type="text" id="inq-event-type" name="event-type" placeholder="Type of event (e.g. wedding, birthday, corporate)" required />
+        <textarea id="inq-event-desc" name="event-description" placeholder="Tell us about your event — what's the vibe, any special requests, anything we should know?" required></textarea>
         <input type="text" id="inq-promo" name="promo-code" placeholder="Promo Code (optional)" />
-        <textarea id="inq-message" name="message" placeholder="Anything else we should know? (optional)"></textarea>
-        <button type="submit" class="btn" id="booking-submit-btn">Book Now</button>
+        <textarea id="inq-message" name="message" placeholder="Anything else? (optional)"></textarea>
+
+        <button type="button" class="btn" id="booking-continue-btn">Continue to Agreement &rarr;</button>
       </form>
 
+      <!-- Step 2: Agreement (shown after Continue) -->
+      <div id="booking-step-2" style="display:none;">
+        <div class="step2-header">
+          <h2 class="step2-title">Review &amp; Sign Your Agreement</h2>
+          <p class="step2-sub">Read through the agreement below and complete the form. Submitting the agreement automatically sends your booking and invoice — no extra steps.</p>
+        </div>
+        <div class="agreement-frame-wrap">
+          <iframe
+            id="agreement-frame"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfToULoCoox4tvHOg3g0v2Fgf2o9VX2JWKfRmh9y7gO6mgS6g/viewform?embedded=true"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            title="Booking Agreement">
+            Loading agreement…
+          </iframe>
+        </div>
+        <div id="booking-processing" style="display:none;">
+          <p class="step2-sub">Sending your booking and invoice — just a moment…</p>
+        </div>
+        <div id="booking-error" style="display:none;">
+          <p style="color:#c0392b; font-size:0.95rem;">We received your signed agreement but something went wrong sending the invoice. Please email us at <a href="mailto:inquiry@eventfulmemoriesco.com">inquiry@eventfulmemoriesco.com</a> and we'll get you sorted right away.</p>
+        </div>
+      </div>
+
       <div id="inquiry-success" style="display:none;">
-        <p>Your booking request is in! Use the link below to pay your 50% deposit and lock in your date.</p>
+        <p>Your booking is in! Use the link below to pay your 50% deposit and lock in your date.</p>
         <a id="deposit-pay-link" href="#" target="_blank" rel="noopener" class="btn" style="display:none; margin-top: 1rem;">Pay Your Deposit</a>
         <p style="margin-top: 1rem; font-size: 0.9rem; color: #6b5f4a;">Save that link — it's your payment page. Questions? Email us at <a href="mailto:inquiry@eventfulmemoriesco.com">inquiry@eventfulmemoriesco.com</a></p>
       </div>

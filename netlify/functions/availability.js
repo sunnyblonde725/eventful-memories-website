@@ -54,7 +54,7 @@ exports.handler = async (event) => {
       if (isAllDay) {
         let cur = evStart;
         while (cur < ev.end.date) {
-          if (!dayMap[cur] || (dayMap[cur] === "public" && state === "unavailable")) {
+          if (!dayMap[cur] || (dayMap[cur] === "unavailable" && state === "public")) {
             dayMap[cur] = state;
           }
           cur = addDays(cur, 1);

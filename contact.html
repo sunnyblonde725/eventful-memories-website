@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Eventful Memories</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Eventful Memories</a></div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-menu">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="book.html">Book</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="inner-page">
+    <h1>Get in Touch</h1>
+    <p class="page-subtitle">Not ready to book yet, or just have a question? We'd love to hear from you. For vendor collabs, partnership inquiries, or anything else — reach out below.</p>
+
+    <div class="contact-wrap">
+
+      <div class="contact-form-col">
+        <form name="contact" id="contact-form" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="text" name="bot-field" style="display:none;" aria-hidden="true" />
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <select name="subject" class="contact-select">
+            <option value="" disabled selected>What's this about?</option>
+            <option value="General question">General question</option>
+            <option value="Vendor / collab inquiry">Vendor / collab inquiry</option>
+            <option value="Custom quote">Custom quote</option>
+            <option value="Something else">Something else</option>
+          </select>
+          <textarea name="message" placeholder="Your message..." required></textarea>
+          <button type="submit" class="btn" id="contact-submit-btn">Send Message</button>
+        </form>
+
+        <div id="contact-success" style="display:none;">
+          <p>Got it! We'll get back to you soon. In the meantime, feel free to email us directly at <a href="mailto:inquiry@eventfulmemoriesco.com">inquiry@eventfulmemoriesco.com</a></p>
+        </div>
+
+        <p class="contact-direct">Prefer email? <a href="mailto:inquiry@eventfulmemoriesco.com">inquiry@eventfulmemoriesco.com</a></p>
+      </div>
+
+      <div class="contact-collab-col">
+        <h2>Work With Us</h2>
+        <p>We're always open to partnerships that make events better. If you're a photographer, venue coordinator, wedding planner, or market organizer — let's talk.</p>
+        <ul class="contact-collab-list">
+          <li>Referral partnerships with photographers</li>
+          <li>Recurring event setups (markets, theaters, venues)</li>
+          <li>Vendor package bundles</li>
+          <li>Collab shoots and portfolio building</li>
+        </ul>
+        <p>We believe in building a community of people who refer each other because the work is genuinely good — not just because there's a deal on the table.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Eventful Memories LLC &nbsp;·&nbsp; <a href="policy.html" class="footer-link">Policies</a></p>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("contact-submit-btn");
+      btn.textContent = "Sending...";
+      btn.disabled = true;
+
+      try {
+        const formData = new FormData(e.target);
+        await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(formData).toString(),
+        });
+        e.target.style.display = "none";
+        document.getElementById("contact-success").style.display = "block";
+      } catch {
+        btn.textContent = "Send Message";
+        btn.disabled = false;
+        alert("Something went wrong — please email us directly at inquiry@eventfulmemoriesco.com");
+      }
+    });
+  </script>
+</body>
+</html>

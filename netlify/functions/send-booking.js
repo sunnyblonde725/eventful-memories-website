@@ -59,7 +59,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "Invalid request." }) };
   }
 
-  const { name, email, phone, eventDate, venue, message, lineItems, promoCode } = body;
+  const { name, email, phone, eventDate, venue, eventType, eventDescription, message, lineItems, promoCode } = body;
 
   if (!name || !email || !eventDate || !lineItems?.length) {
     return { statusCode: 400, body: JSON.stringify({ error: "Please fill in all required fields." }) };
@@ -180,6 +180,7 @@ exports.handler = async (event) => {
           `Client: ${name}`,
           `Email: ${email}`,
           phone ? `Phone: ${phone}` : null,
+          eventType ? `Event type: ${eventType}` : null,
           `Venue: ${venue || "TBD"}`,
           `Package: ${packageName}`,
           addons ? `Add-ons: ${addons}` : null,
@@ -187,6 +188,8 @@ exports.handler = async (event) => {
           promoPercent ? `Promo code: ${promoCode.trim()} (${promoPercent}% off)` : null,
           ``,
           paymentUrl ? `💳 Payment link: ${paymentUrl}` : null,
+          eventDescription ? `About the event: ${eventDescription}` : null,
+          message ? `Additional notes: ${message}` : null,
           `⏳ Awaiting deposit payment.`,
           message ? `\nClient note: ${message}` : null,
         ].filter(Boolean).join("\n");
