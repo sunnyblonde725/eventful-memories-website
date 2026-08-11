@@ -132,7 +132,7 @@ exports.handler = async (event) => {
         title: `Photo Booth Booking — ${friendlyDate(eventDate)}`,
         description: venue ? `Event at ${venue}` : undefined,
         primary_recipient: { customer_id: customerId },
-        delivery_method: "EMAIL",
+        delivery_method: "SHARE_MANUALLY",
         accepted_payment_methods: { card: true },
         payment_requests: [
           {
@@ -150,20 +150,13 @@ exports.handler = async (event) => {
     const invoiceId = invoiceRes.invoice.id;
     const invoiceVersion = invoiceRes.invoice.version ?? 0;
 
-    // 4. Send the invoice — Square sandbox has a known bug where /send returns NOT_FOUND
-    // even for valid DRAFT invoices. Non-fatal in sandbox; fatal in production.
-    try {
-      await square(`/invoices/${invoiceId}/send`, "POST", {
-        idempotency_key: `send-${Date.now()}`,
-        version: invoiceVersion,
-      });
-    } catch (sendErr) {
-      if (SANDBOX) {
-        console.warn("Sandbox: invoice send skipped —", sendErr.message, "— invoiceId:", invoiceId);
-      } else {
-        throw sendErr;
-      }
-    }
+    // 4. Publish the invoice — this makes it payable and generates a public_url.
+    // We share the link directly with the customer instead of using Square's email delivery.
+    const publishRes = await square(`/invoices/${invoiceId}/publish`, "POST", {
+      idempotency_key: `publish-${Date.now()}`,
+      version: invoiceVersion,
+    });
+    const paymentUrl = publishRes.invoice?.public_url || null;
 
     // 5. Google Calendar — add pending event (non-fatal if this fails)
     if (process.env.GOOGLE_REFRESH_TOKEN) {
@@ -193,7 +186,8 @@ exports.handler = async (event) => {
           `Estimated Total: ${totalDisplay}`,
           promoPercent ? `Promo code: ${promoCode.trim()} (${promoPercent}% off)` : null,
           ``,
-          `⏳ Awaiting deposit payment via Square invoice.`,
+          paymentUrl ? `💳 Payment link: ${paymentUrl}` : null,
+          `⏳ Awaiting deposit payment.`,
           message ? `\nClient note: ${message}` : null,
         ].filter(Boolean).join("\n");
 
@@ -216,7 +210,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ success: true }),
+      body: JSON.stringify({ success: true, paymentUrl }),
     };
   } catch (err) {
     console.error("Booking error:", err.message);

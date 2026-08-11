@@ -235,7 +235,15 @@ document.getElementById("inquiry-form")?.addEventListener("submit", async (e) =>
 
     if (res.ok && data.success) {
       e.target.style.display = "none";
-      document.getElementById("inquiry-success").style.display = "block";
+      const successEl = document.getElementById("inquiry-success");
+      if (data.paymentUrl) {
+        const linkEl = document.getElementById("deposit-pay-link");
+        if (linkEl) {
+          linkEl.href = data.paymentUrl;
+          linkEl.style.display = "inline-block";
+        }
+      }
+      successEl.style.display = "block";
     } else {
       throw new Error(data.error || "Something went wrong.");
     }
