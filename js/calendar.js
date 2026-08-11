@@ -80,8 +80,12 @@ function renderGrid() {
     const isToday = iso === today;
     const isSelected = iso === cal.selected;
 
+    // Only Fridays (5) and Saturdays (6) are bookable right now
+    const dow = new Date(iso + "T12:00:00").getDay();
+    const bookableDay = dow === 5 || dow === 6;
+
     let state = "available";
-    if (!past && !cal.loading) state = getState(iso);
+    if (!past && !cal.loading) state = bookableDay ? getState(iso) : "unavailable";
 
     let cls = "cal-dc";
     if (isSelected) cls += " cal-dc--sel";
