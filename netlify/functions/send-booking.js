@@ -166,13 +166,13 @@ exports.handler = async (event) => {
     }
 
     // 5. Google Calendar — add pending event (non-fatal if this fails)
-    if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+    if (process.env.GOOGLE_REFRESH_TOKEN) {
       try {
-        const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
-        const auth = new google.auth.GoogleAuth({
-          credentials,
-          scopes: ["https://www.googleapis.com/auth/calendar"],
-        });
+        const auth = new google.auth.OAuth2(
+          process.env.GOOGLE_CLIENT_ID,
+          process.env.GOOGLE_CLIENT_SECRET
+        );
+        auth.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
         const calendar = google.calendar({ version: "v3", auth });
 
         const packageName = lineItems.find((i) => i.isPackage)?.name || "Package";
