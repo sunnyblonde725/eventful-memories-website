@@ -132,7 +132,7 @@ exports.handler = async (event) => {
         title: `Photo Booth Booking — ${friendlyDate(eventDate)}`,
         description: venue ? `Event at ${venue}` : undefined,
         primary_recipient: { customer_id: customerId },
-        delivery_method: "SHARE_MANUALLY",
+        delivery_method: "EMAIL",
         accepted_payment_methods: { card: true },
         payment_requests: [
           {
