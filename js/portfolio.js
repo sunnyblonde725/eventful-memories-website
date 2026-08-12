@@ -1,8 +1,8 @@
 (function () {
-  const grid = document.querySelector(".portfolio-grid-full");
-  if (!grid) return;
+  const grids = document.querySelectorAll(".portfolio-grid-full");
+  if (!grids.length) return;
 
-  const images = Array.from(grid.querySelectorAll("img"));
+  const images = Array.from(grids).flatMap(g => Array.from(g.querySelectorAll("img")));
   let current = 0;
 
   // Build lightbox DOM

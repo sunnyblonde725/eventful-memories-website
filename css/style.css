@@ -282,6 +282,10 @@ section h2 {
   font-size: 0.95rem;
 }
 
+.portfolio-grid-booth img {
+  object-position: center center;
+}
+
 .portfolio-grid img {
   width: 100%;
   height: 400px;

@@ -222,12 +222,11 @@ document.getElementById("booking-continue-btn")?.addEventListener("click", () =>
     return;
   }
 
-  // Reset load counter and set the real pre-filled URL
-  frameLoads = 0;
-  const name = encodeURIComponent(document.getElementById("inq-name").value.trim());
-  const email = encodeURIComponent(document.getElementById("inq-email").value.trim());
-  document.getElementById("agreement-frame").src =
-    `https://docs.google.com/forms/d/e/1FAIpQLSfToULoCoox4tvHOg3g0v2Fgf2o9VX2JWKfRmh9y7gO6mgS6g/viewform?embedded=true&entry.887194872=${name}&entry.877313115=${email}`;
+  // Load the Tally agreement form
+  const frame = document.getElementById("agreement-frame");
+  frame.removeAttribute("src");
+  frame.setAttribute("data-tally-src", "https://tally.so/embed/2EdbXA?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1");
+  if (typeof Tally !== "undefined") Tally.loadEmbeds();
 
   document.getElementById("booking-step-2").style.display = "block";
   document.getElementById("booking-step-2").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -283,11 +282,9 @@ async function submitBooking() {
   }
 }
 
-// ── Detect Google Form submission via iframe load count ──
-let frameLoads = 0;
-document.getElementById("agreement-frame")?.addEventListener("load", () => {
-  frameLoads++;
-  if (frameLoads >= 2) {
+// ── Detect Tally form submission ──
+window.addEventListener("message", (e) => {
+  if (e.data && e.data.event === "Tally::FormSubmitted") {
     document.getElementById("agreement-frame").style.display = "none";
     submitBooking();
   }
