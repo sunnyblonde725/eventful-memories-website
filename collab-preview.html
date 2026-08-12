@@ -1,0 +1,196 @@
+<title>Collab Section — Color Options</title>
+<style>
+  /* ── Brand tokens ── */
+  :root {
+    --gold: #b8922a;
+    --gold-light: #c9a84c;
+    --cream: #f5f0e8;
+    --cream-dark: #ede5d6;
+    --text: #2c2416;
+    --gray: #9e9088;
+    --black: #1a1612;
+    --mahogany: #4a2c0e;
+
+    --font-heading: Georgia, 'Times New Roman', serif;
+    --font-body: 'Palatino Linotype', Palatino, Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: var(--font-body);
+    color: var(--text);
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .page-label {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Option wrapper ── */
+  .option {
+    margin-bottom: 2.5rem;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0 0.25rem;
+  }
+
+  .option-num {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .option-name {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  .swatch {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.12);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  /* ── Collab section replica ── */
+  .collab {
+    padding: 5rem 2rem;
+    text-align: center;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .collab-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .collab h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    letter-spacing: 0.03em;
+    margin-bottom: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .collab p {
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 2.25rem;
+  }
+
+  .collab .btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: opacity 0.15s;
+    cursor: default;
+  }
+
+  /* ── Option A: Deep Black (current) ── */
+  .opt-a { background: var(--black); }
+  .opt-a h2 { color: var(--gold); }
+  .opt-a p  { color: rgba(255,255,255,0.68); }
+  .opt-a .btn { background: var(--gold); color: var(--black); }
+
+  /* ── Option B: Warm Cream ── */
+  .opt-b { background: var(--cream-dark); border: 1px solid #d9cebf; }
+  .opt-b h2 { color: var(--gold); }
+  .opt-b p  { color: #6b5c4a; }
+  .opt-b .btn { border: 1.5px solid var(--gold); color: var(--gold); background: transparent; }
+
+  /* ── Option C: Mahogany ── */
+  .opt-c { background: var(--mahogany); }
+  .opt-c h2 { color: var(--gold-light); }
+  .opt-c p  { color: rgba(245, 240, 232, 0.75); }
+  .opt-c .btn { border: 1.5px solid var(--gold-light); color: var(--gold-light); background: transparent; }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--cream-dark);
+    margin: 0.5rem 0 2.5rem;
+  }
+</style>
+
+<p class="page-label">Collab Section — Color Options</p>
+
+<!-- Option A -->
+<div class="option">
+  <div class="option-label">
+    <span class="option-num">A</span>
+    <span class="option-name">Current — Deep Black</span>
+    <span class="swatch" style="background:#1a1612;"></span>
+  </div>
+  <div class="collab opt-a">
+    <div class="collab-inner">
+      <h2>Let's Work Together</h2>
+      <p>Are you a photographer, venue, or event organizer? We're always open to building something great with the right people — referral partnerships, vendor collabs, recurring event setups, and more.</p>
+      <a class="btn">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<!-- Option B -->
+<div class="option">
+  <div class="option-label">
+    <span class="option-num">B</span>
+    <span class="option-name">Warm Cream — Soft & Cohesive</span>
+    <span class="swatch" style="background:#ede5d6; border-color:#c9bfb0;"></span>
+  </div>
+  <div class="collab opt-b">
+    <div class="collab-inner">
+      <h2>Let's Work Together</h2>
+      <p>Are you a photographer, venue, or event organizer? We're always open to building something great with the right people — referral partnerships, vendor collabs, recurring event setups, and more.</p>
+      <a class="btn">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<!-- Option C -->
+<div class="option">
+  <div class="option-label">
+    <span class="option-num">C</span>
+    <span class="option-name">Deep Mahogany — Rich & Earthy</span>
+    <span class="swatch" style="background:#4a2c0e;"></span>
+  </div>
+  <div class="collab opt-c">
+    <div class="collab-inner">
+      <h2>Let's Work Together</h2>
+      <p>Are you a photographer, venue, or event organizer? We're always open to building something great with the right people — referral partnerships, vendor collabs, recurring event setups, and more.</p>
+      <a class="btn">Get in Touch</a>
+    </div>
+  </div>
+</div>

@@ -71,13 +71,13 @@
         <input type="hidden" id="inq-line-items" name="line-items" />
         <input type="text" id="inq-name" name="name" placeholder="Your Name" required />
         <input type="email" id="inq-email" name="email" placeholder="Your Email" required />
-        <input type="tel" id="inq-phone" name="phone" placeholder="Phone Number (optional)" />
+        <input type="tel" id="inq-phone" name="phone" placeholder="Phone Number" required />
         <div class="form-field-labeled">
           <span class="form-label">Event Date</span>
           <input type="date" id="inq-date" name="event-date" required />
         </div>
-        <input type="number" id="inq-guests" name="guests" placeholder="Approximate Guest Count" min="1" max="5000" />
-        <input type="text" id="inq-venue" name="venue" placeholder="Venue / Location" />
+        <input type="number" id="inq-guests" name="guests" placeholder="Approximate Guest Count" min="1" max="5000" required />
+        <input type="text" id="inq-venue" name="venue" placeholder="Venue Name &amp; Address (e.g. The Grand Hall, 123 Main St, Salt Lake City, UT)" required />
         <input type="text" id="inq-event-type" name="event-type" placeholder="Type of event (e.g. wedding, birthday, corporate)" required />
         <textarea id="inq-event-desc" name="event-description" placeholder="Tell us about your event — what's the vibe, any special requests, anything we should know?" required></textarea>
         <input type="text" id="inq-promo" name="promo-code" placeholder="Promo Code (optional)" />
@@ -95,7 +95,7 @@
         <div class="agreement-frame-wrap">
           <iframe
             id="agreement-frame"
-            src="https://docs.google.com/forms/d/e/1FAIpQLSfToULoCoox4tvHOg3g0v2Fgf2o9VX2JWKfRmh9y7gO6mgS6g/viewform?embedded=true"
+            src="about:blank"
             frameborder="0"
             marginheight="0"
             marginwidth="0"

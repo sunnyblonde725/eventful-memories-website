@@ -145,13 +145,43 @@ nav a:hover {
   align-items: center;
   text-align: center;
   padding: 2rem;
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.5) 100%),
-                    url('../images/hero.jpg');
-  background-size: cover;
-  background-position: center top;
+  position: relative;
+  overflow: hidden;
 }
 
-#hero h1 {
+.hero-slides {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.hero-slide.active { opacity: 1; }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.5) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-content h1 {
   font-family: var(--font-heading);
   font-size: clamp(2.5rem, 6vw, 5rem);
   color: #fff;
@@ -159,7 +189,7 @@ nav a:hover {
   margin-bottom: 1rem;
 }
 
-#hero p {
+.hero-content p {
   color: var(--gold-light);
   font-size: 1.1rem;
   margin-bottom: 2.5rem;
@@ -231,6 +261,25 @@ section h2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
+}
+
+.portfolio-section-label {
+  margin: 3.5rem 0 1.5rem;
+  border-top: 1px solid var(--cream-dark);
+  padding-top: 2.5rem;
+}
+
+.portfolio-section-label h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+.portfolio-section-label p {
+  color: var(--gray);
+  font-size: 0.95rem;
 }
 
 .portfolio-grid img {

@@ -25,9 +25,17 @@
   </header>
 
   <section id="hero">
-    <h1>Capture Every Moment</h1>
-    <p>Premium photo booth experiences for weddings, parties, and events.</p>
-    <a href="book.html" class="btn">Book Your Event</a>
+    <div class="hero-slides">
+      <div class="hero-slide active" style="background-image: url('images/hero.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('images/booth-action.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('images/booth-wedding.jpg');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Capture Every Moment</h1>
+      <p>Premium photo booth experiences for weddings, parties, and events.</p>
+      <a href="book.html" class="btn">Book Your Event</a>
+    </div>
   </section>
 
   <section id="portfolio">
@@ -123,5 +131,14 @@
 
   <script src="js/nav.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    const slides = document.querySelectorAll(".hero-slide");
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove("active");
+      current = (current + 1) % slides.length;
+      slides[current].classList.add("active");
+    }, 5000);
+  </script>
 </body>
 </html>

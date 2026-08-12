@@ -222,7 +222,8 @@ document.getElementById("booking-continue-btn")?.addEventListener("click", () =>
     return;
   }
 
-  // Pre-fill name and email in the Google Form
+  // Reset load counter and set the real pre-filled URL
+  frameLoads = 0;
   const name = encodeURIComponent(document.getElementById("inq-name").value.trim());
   const email = encodeURIComponent(document.getElementById("inq-email").value.trim());
   document.getElementById("agreement-frame").src =
