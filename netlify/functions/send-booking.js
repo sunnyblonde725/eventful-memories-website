@@ -33,18 +33,17 @@ function friendlyDate(dateStr) {
   return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 }
 
-// PROMO_CODES env var is a JSON object like {"please": 5} — code -> percent off.
-// Add/remove codes in Netlify without a code change.
-function getPromoDiscountPercent(code) {
+// Look up a promo code against Square's discount catalog (case-insensitive name match).
+async function getSquareDiscount(code) {
   if (!code) return null;
-  let codes;
-  try {
-    codes = JSON.parse(process.env.PROMO_CODES || "{}");
-  } catch {
-    return null;
-  }
-  const percent = codes[code.trim().toLowerCase()];
-  return typeof percent === "number" ? percent : null;
+  const res = await square("/catalog/list?types=DISCOUNT", "GET");
+  const discounts = res.objects || [];
+  const match = discounts.find(
+    (d) => d.discount_data?.name?.toLowerCase() === code.trim().toLowerCase()
+  );
+  if (!match) return null;
+  const percent = parseFloat(match.discount_data?.percentage);
+  return isNaN(percent) ? null : { name: match.discount_data.name, percent };
 }
 
 exports.handler = async (event) => {
@@ -65,7 +64,8 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "Please fill in all required fields." }) };
   }
 
-  const promoPercent = getPromoDiscountPercent(promoCode);
+  const promoDiscount = await getSquareDiscount(promoCode);
+  const promoPercent = promoDiscount?.percent || null;
 
   const nameParts = name.trim().split(" ");
   const firstName = nameParts[0];
@@ -112,8 +112,8 @@ exports.handler = async (event) => {
           quantity: String(item.quantity || 1),
           base_price_money: { amount: item.amountCents, currency: "USD" },
         })),
-        discounts: promoPercent
-          ? [{ name: `Promo: ${promoCode.trim()}`, percentage: String(promoPercent), scope: "ORDER" }]
+        discounts: promoDiscount
+          ? [{ name: `Promo: ${promoDiscount.name}`, percentage: String(promoDiscount.percent), scope: "ORDER" }]
           : undefined,
         metadata: {
           event_date: eventDate,
@@ -185,7 +185,7 @@ exports.handler = async (event) => {
           `Package: ${packageName}`,
           addons ? `Add-ons: ${addons}` : null,
           `Estimated Total: ${totalDisplay}`,
-          promoPercent ? `Promo code: ${promoCode.trim()} (${promoPercent}% off)` : null,
+          promoDiscount ? `Promo code: ${promoDiscount.name} (${promoDiscount.percent}% off)` : null,
           ``,
           paymentUrl ? `💳 Payment link: ${paymentUrl}` : null,
           eventDescription ? `About the event: ${eventDescription}` : null,
