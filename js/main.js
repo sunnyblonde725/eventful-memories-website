@@ -284,12 +284,11 @@ async function submitBooking() {
 
 // ── Detect Tally form submission ──
 window.addEventListener("message", (e) => {
-  console.warn("MSG origin:", e.origin, "data:", JSON.stringify(e.data));
   let data = e.data;
   if (typeof data === "string") {
     try { data = JSON.parse(data); } catch { return; }
   }
-  if (data && data.event === "Tally::FormSubmitted") {
+  if (data && data.event === "Tally.FormSubmitted") {
     document.getElementById("agreement-frame").style.display = "none";
     submitBooking();
   }
