@@ -135,34 +135,6 @@ nav a:hover {
     grid-template-columns: 1fr;
   }
 
-  /* About section — stack vertically on mobile */
-  .about-inner {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .about-photo {
-    flex: 0 0 auto;
-    width: 100%;
-  }
-
-  .about-photo img {
-    height: 320px;
-  }
-
-  /* Pricing cards — ensure full width and readable on mobile */
-  .pricing-card {
-    padding: 1.5rem;
-  }
-
-  .pricing-price {
-    font-size: 2.2rem;
-  }
-
-  /* Pricing teaser — stack cards */
-  .pricing-teaser-card {
-    padding: 1.25rem;
-  }
 }
 
 /* ── Hero ── */
@@ -1428,4 +1400,48 @@ footer {
   padding: 2rem;
   color: var(--gray);
   font-size: 0.85rem;
+}
+
+/* ── Mobile overrides (must be at bottom to win the cascade) ── */
+@media (max-width: 700px) {
+  .about-inner {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .about-photo {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .about-photo img {
+    height: 320px;
+  }
+
+  .pricing-grid,
+  .pricing-teaser {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card {
+    padding: 1.5rem;
+  }
+
+  .pricing-price {
+    font-size: 2.2rem;
+  }
+
+  .pricing-teaser-card {
+    padding: 1.25rem;
+  }
+
+  .portfolio-grid,
+  .portfolio-grid-full {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-wrap {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
 }
