@@ -27,6 +27,7 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* ── Nav ── */
@@ -1402,25 +1403,26 @@ footer {
   font-size: 0.85rem;
 }
 
-/* ── Mobile overrides (must be at bottom to win the cascade) ── */
+/* ── Mobile overrides ── */
 @media (max-width: 700px) {
   .about-inner {
-    flex-direction: column;
-    gap: 2rem;
+    flex-direction: column !important;
+    gap: 2rem !important;
   }
 
   .about-photo {
-    flex: 0 0 auto;
-    width: 100%;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .about-photo img {
-    height: 320px;
+    height: 320px !important;
   }
 
   .pricing-grid,
   .pricing-teaser {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .pricing-card {
@@ -1437,7 +1439,7 @@ footer {
 
   .portfolio-grid,
   .portfolio-grid-full {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .contact-wrap {
