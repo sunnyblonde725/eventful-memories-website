@@ -64,9 +64,6 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "Please fill in all required fields." }) };
   }
 
-  const promoDiscount = await getSquareDiscount(promoCode);
-  const promoPercent = promoDiscount?.percent || null;
-
   const nameParts = name.trim().split(" ");
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(" ") || "";
@@ -91,14 +88,19 @@ exports.handler = async (event) => {
   }
 
   try {
-    // 1. Create Square customer
-    const customerRes = await square("/customers", "POST", {
-      given_name: firstName,
-      family_name: lastName,
-      email_address: email,
-      phone_number: phone || undefined,
-      idempotency_key: `customer-${email}-${Date.now()}`,
-    });
+    // 1. Discount lookup + customer creation run in parallel to save time
+    const customerKey = `customer-${email}-${Date.now()}`;
+    const [promoDiscount, customerRes] = await Promise.all([
+      getSquareDiscount(promoCode),
+      square("/customers", "POST", {
+        given_name: firstName,
+        family_name: lastName,
+        email_address: email,
+        phone_number: phone || undefined,
+        idempotency_key: customerKey,
+      }),
+    ]);
+    const promoPercent = promoDiscount?.percent || null;
     const customerId = customerRes.customer.id;
 
     // 2. Create Square order with line items

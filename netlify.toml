@@ -4,3 +4,6 @@
 
 [build.environment]
   SECRETS_SCAN_OMIT_KEYS = "SQUARE_ENVIRONMENT"
+
+[functions]
+  timeout = 26
