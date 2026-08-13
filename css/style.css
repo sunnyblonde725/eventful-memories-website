@@ -134,6 +134,35 @@ nav a:hover {
   .portfolio-grid-full {
     grid-template-columns: 1fr;
   }
+
+  /* About section — stack vertically on mobile */
+  .about-inner {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .about-photo {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .about-photo img {
+    height: 320px;
+  }
+
+  /* Pricing cards — ensure full width and readable on mobile */
+  .pricing-card {
+    padding: 1.5rem;
+  }
+
+  .pricing-price {
+    font-size: 2.2rem;
+  }
+
+  /* Pricing teaser — stack cards */
+  .pricing-teaser-card {
+    padding: 1.25rem;
+  }
 }
 
 /* ── Hero ── */
