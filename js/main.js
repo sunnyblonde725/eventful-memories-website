@@ -284,9 +284,7 @@ async function submitBooking() {
 
 // ── Detect Tally form submission ──
 window.addEventListener("message", (e) => {
-  if (e.origin && e.origin.includes("tally")) {
-    console.warn("TALLY MESSAGE:", JSON.stringify(e.data));
-  }
+  console.warn("MSG origin:", e.origin, "data:", JSON.stringify(e.data));
   let data = e.data;
   if (typeof data === "string") {
     try { data = JSON.parse(data); } catch { return; }
