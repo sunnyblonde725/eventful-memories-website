@@ -315,15 +315,69 @@ section h2 {
   letter-spacing: 0.03em;
 }
 
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  max-width: 1000px;
+.testimonials-carousel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 700px;
   margin: 0 auto;
 }
 
+.carousel-viewport {
+  overflow: hidden;
+  flex: 1;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.carousel-btn {
+  background: none;
+  border: 1px solid var(--cream-dark);
+  color: var(--gold);
+  font-size: 2.2rem;
+  line-height: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.carousel-btn:hover {
+  background: var(--cream-dark);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  border: 1px solid var(--gray);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.carousel-dot--active {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
 .testimonial-card {
+  flex: 0 0 100%;
   background: var(--cream);
   border: 1px solid #ddd5c4;
   padding: 2rem 2rem 1.5rem;

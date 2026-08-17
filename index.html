@@ -85,24 +85,35 @@
 
   <section id="testimonials">
     <h2>Kind Words</h2>
-    <div class="testimonials-grid">
-      <blockquote class="testimonial-card">
-        <p>"We loved having the photo booth at the reception! It was so much fun, easy to use, and everyone enjoyed taking pictures. It was definitely one of the highlights of the night!"</p>
-        <cite>— Mirian T.</cite>
-      </blockquote>
-      <blockquote class="testimonial-card">
-        <p>"My husband and I booked the Vintage Photo Booth for our reception and absolutely loved it! We wanted a photo guest book but Polaroids weren't in our budget — this was the perfect solution. The vintage camera style was right up my husband's alley, and we were able to capture memories with everyone who came. Thank you Lorenne and family for making our night extra perfect!"</p>
-        <cite>— Savannah O.</cite>
-      </blockquote>
-      <blockquote class="testimonial-card">
-        <p>"The photo booth was a huge hit at the wedding. All the guests loved it. Not only did they get a keepsake to take home, but we had everyone keep one of the photos and put the other in the guestbook for the bride and groom — that was much better than just their signature."</p>
-        <cite>— Shalae T.</cite>
-      </blockquote>
-      <blockquote class="testimonial-card">
-        <p>"I was a guest at a wedding where the photo booth was available and we loved it! Such a fun way to capture memories of the day. My kids loved it and took pictures with their cousins, grandparents and more. It added a fun touch to the reception and let us come home with cute keepsakes."</p>
-        <cite>— Cortney D.</cite>
-      </blockquote>
+    <div class="testimonials-carousel">
+      <button class="carousel-btn carousel-btn--prev" id="carousel-prev" aria-label="Previous testimonial">&#8249;</button>
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carousel-track">
+          <blockquote class="testimonial-card">
+            <p>"We loved having the photo booth at the reception! It was so much fun, easy to use, and everyone enjoyed taking pictures. It was definitely one of the highlights of the night!"</p>
+            <cite>— Mirian T.</cite>
+          </blockquote>
+          <blockquote class="testimonial-card">
+            <p>"My husband and I booked the Vintage Photo Booth for our reception and absolutely loved it! We wanted a photo guest book but Polaroids weren't in our budget — this was the perfect solution. The vintage camera style was right up my husband's alley, and we were able to capture memories with everyone who came. Thank you Lorenne and family for making our night extra perfect!"</p>
+            <cite>— Savannah O.</cite>
+          </blockquote>
+          <blockquote class="testimonial-card">
+            <p>"The photo booth was a huge hit at the wedding. All the guests loved it. Not only did they get a keepsake to take home, but we had everyone keep one of the photos and put the other in the guestbook for the bride and groom — that was much better than just their signature."</p>
+            <cite>— Shalae T.</cite>
+          </blockquote>
+          <blockquote class="testimonial-card">
+            <p>"I was a guest at a wedding where the photo booth was available and we loved it! Such a fun way to capture memories of the day. My kids loved it and took pictures with their cousins, grandparents and more. It added a fun touch to the reception and let us come home with cute keepsakes."</p>
+            <cite>— Cortney D.</cite>
+          </blockquote>
+          <blockquote class="testimonial-card">
+            <p>"Lorenne and Katy were super helpful with the booth helping things run smooth, and it was easy and fun to do. We were also able to have two copies of photos, which was great for what we wanted. One for the guest book that they can tape into it for our memories and one that they could take home to remember the event. Super simple super fun and adds a great vintage vibe as well."</p>
+            <cite>— Hunter O.</cite>
+          </blockquote>
+        </div>
+      </div>
+      <button class="carousel-btn carousel-btn--next" id="carousel-next" aria-label="Next testimonial">&#8250;</button>
     </div>
+    <div class="carousel-dots" id="carousel-dots"></div>
   </section>
 
   <section id="about">
@@ -134,12 +145,43 @@
   <script src="js/main.js"></script>
   <script>
     const slides = document.querySelectorAll(".hero-slide");
-    let current = 0;
+    let heroCurrent = 0;
     setInterval(() => {
-      slides[current].classList.remove("active");
-      current = (current + 1) % slides.length;
-      slides[current].classList.add("active");
+      slides[heroCurrent].classList.remove("active");
+      heroCurrent = (heroCurrent + 1) % slides.length;
+      slides[heroCurrent].classList.add("active");
     }, 5000);
+  </script>
+  <script>
+    (function () {
+      const track = document.getElementById("carousel-track");
+      const dotsContainer = document.getElementById("carousel-dots");
+      const cards = track ? track.querySelectorAll(".testimonial-card") : [];
+      let idx = 0;
+
+      if (!cards.length) return;
+
+      cards.forEach(function (_, i) {
+        const dot = document.createElement("button");
+        dot.className = "carousel-dot" + (i === 0 ? " carousel-dot--active" : "");
+        dot.setAttribute("aria-label", "Go to testimonial " + (i + 1));
+        dot.addEventListener("click", function () { goTo(i); });
+        dotsContainer.appendChild(dot);
+      });
+
+      function goTo(n) {
+        idx = (n + cards.length) % cards.length;
+        track.style.transform = "translateX(-" + idx * 100 + "%)";
+        dotsContainer.querySelectorAll(".carousel-dot").forEach(function (dot, i) {
+          dot.classList.toggle("carousel-dot--active", i === idx);
+        });
+      }
+
+      document.getElementById("carousel-prev").addEventListener("click", function () { goTo(idx - 1); });
+      document.getElementById("carousel-next").addEventListener("click", function () { goTo(idx + 1); });
+
+      setInterval(function () { goTo(idx + 1); }, 6000);
+    })();
   </script>
 </body>
 </html>
